@@ -38,7 +38,7 @@
 
     <!-- 链接到persistence.xml -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="NewPersistenceUnit"/>
+        <property name="persistenceUnitName" value="SubwayPersistenceUnit"/>
     </bean>
 
     <!-- 事务管理 -->

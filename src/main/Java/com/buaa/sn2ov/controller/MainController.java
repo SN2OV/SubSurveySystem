@@ -1,7 +1,7 @@
 package com.buaa.sn2ov.controller;
 
-import com.buaa.sn2ov.model.Users;
-import com.buaa.sn2ov.repository.UsersRepository;
+import com.buaa.sn2ov.model.User;
+import com.buaa.sn2ov.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +21,7 @@ import java.util.List;
 public class MainController {
     // 自动装配数据库接口-----
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository usersRepository;
 
     @RequestMapping(value = "/")
     public String index() {
@@ -31,7 +31,7 @@ public class MainController {
 
     //TODO 登陆到主界面---
     @RequestMapping(value = "/loginAction.do",method = RequestMethod.GET)
-    public String logina(@ModelAttribute("loginUser") Users inputUser, ModelMap modelMap, HttpSession session){
+    public String logina(@ModelAttribute("loginUser") User inputUser, ModelMap modelMap, HttpSession session){
         String inputUserName = inputUser.getUserName();
         try {
             inputUserName = new String(inputUserName.getBytes("iso-8859-1"),"UTF-8");
@@ -45,7 +45,7 @@ public class MainController {
             return "login";
         }else{
             // 查询user表中所有记录
-            List<Users> userList = usersRepository.findAll();
+            List<User> userList = usersRepository.findAll();
             // 将所有记录传递给要返回的jsp页面，放在userList当中
             modelMap.addAttribute("userList", userList);
 
@@ -58,7 +58,7 @@ public class MainController {
     @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
     public String getUsers(ModelMap modelMap) {
         // 查询user表中所有记录
-        List<Users> userList = usersRepository.findAll();
+        List<User> userList = usersRepository.findAll();
 
         // 将所有记录传递给要返回的jsp页面，放在userList当中
         modelMap.addAttribute("userList", userList);
@@ -76,7 +76,7 @@ public class MainController {
 
     // post请求，处理添加用户请求，并重定向到用户管理页面
     @RequestMapping(value = "/admin/users/addP", method = RequestMethod.POST)
-    public String addUserPost(@ModelAttribute("user") Users userEntity) {
+    public String addUserPost(@ModelAttribute("user") User userEntity) {
         // 注意此处，post请求传递过来的是一个UserEntity对象，里面包含了该用户的信息
         // 通过@ModelAttribute()注解可以获取传递过来的'user'，并创建这个对象
 
@@ -93,7 +93,7 @@ public class MainController {
     public String showUser(@PathVariable("id") Integer userId, ModelMap modelMap) {
 
         // 找到userId所表示的用户
-        Users userEntity = usersRepository.findOne(userId);
+        User userEntity = usersRepository.findOne(userId);
 
         // 传递给请求页面
         modelMap.addAttribute("user", userEntity);
@@ -105,7 +105,7 @@ public class MainController {
     public String updateUser(@PathVariable("id") Integer userId, ModelMap modelMap) {
 
         // 找到userId所表示的用户
-        Users userEntity = usersRepository.findOne(userId);
+        User userEntity = usersRepository.findOne(userId);
 
         // 传递给请求页面
         modelMap.addAttribute("user", userEntity);
@@ -114,18 +114,18 @@ public class MainController {
 
     // 更新用户信息 操作
     @RequestMapping(value = "/admin/users/updateP", method = RequestMethod.POST)
-    public String updateUserPost(@ModelAttribute("userP") Users user) {
+    public String updateUserPost(@ModelAttribute("userP") User user) {
 
         // 更新用户信息
-        usersRepository.updateUser(user.getUserName(), user.getAge(),
-                 user.getPassword(), user.getId());
+//        usersRepository.updateUser(user.getUserName(), user.getAge(),
+//                 user.getPassword(), user.getId());
         usersRepository.flush(); // 刷新缓冲区
         return "redirect:/admin/users";
     }
 
     //登陆到主界面
     @RequestMapping(value = "/main",method = RequestMethod.GET)
-    public String login(@ModelAttribute("loginUser") Users inputUser, ModelMap modelMap, HttpSession session){
+    public String login(@ModelAttribute("loginUser") User inputUser, ModelMap modelMap, HttpSession session){
         String inputUserName = inputUser.getUserName();
         try {
             inputUserName = new String(inputUserName.getBytes("iso-8859-1"),"UTF-8");

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1682524957">
-    <data-source source="LOCAL" name="MySQL - testlucene@localhost" uuid="98751092-8a49-4631-8151-89c2deda47db">
+  <component name="DataSourceManagerImpl" format="xml" hash="2735282276">
+    <data-source source="LOCAL" name="MySQL - subsurveysystem@localhost" uuid="22f219de-2cd6-46a8-9a9d-dbeba40d6ab6">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/testlucene</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/subsurveysystem</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

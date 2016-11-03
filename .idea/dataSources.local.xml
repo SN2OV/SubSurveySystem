@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="MySQL - testlucene@localhost" uuid="98751092-8a49-4631-8151-89c2deda47db">
+    <data-source name="MySQL - subsurveysystem@localhost" uuid="22f219de-2cd6-46a8-9a9d-dbeba40d6ab6">
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <schema-pattern>testlucene.*</schema-pattern>
-      <default-schemas>testlucene.*</default-schemas>
+      <schema-pattern>subsurveysystem.*</schema-pattern>
+      <default-schemas>subsurveysystem.*</default-schemas>
     </data-source>
   </component>
 </project>

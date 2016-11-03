@@ -1,12 +1,11 @@
 package com.buaa.sn2ov.other;
 
-import com.buaa.sn2ov.model.Users;
-import com.buaa.sn2ov.repository.UsersRepository;
+import com.buaa.sn2ov.model.User;
+import com.buaa.sn2ov.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,14 +21,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     // 自动装配数据库接口
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
     private DriverManagerDataSource datasource;
 
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserDetails user = null;
-        Users loginUser = usersRepository.findByUserName(s);
-        String access = usersRepository.getAuthorityByUserID(loginUser.getId());
-        user = new User(loginUser.getUserName(),loginUser.getPassword(),true,true,true,true,getAuthorties(access));
+        User loginUser = userRepository.findByUserName(s);
+//        String access = userRepository.getAuthorityByUserID(loginUser.getId());
+//        user = new User(loginUser.getUserName(),loginUser.getPassword(),true,true,true,true,getAuthorties(access));
         return user;
     }
 
