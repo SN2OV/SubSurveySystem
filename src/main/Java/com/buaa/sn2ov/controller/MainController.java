@@ -19,17 +19,17 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    // 自动装配数据库接口
+    // 自动装配数据库接口-----
     @Autowired
     UsersRepository usersRepository;
 
     @RequestMapping(value = "/")
     public String index() {
-
+        String a ;
         return "login";
     }
 
-    //TODO 登陆到主界面
+    //TODO 登陆到主界面---
     @RequestMapping(value = "/loginAction.do",method = RequestMethod.GET)
     public String logina(@ModelAttribute("loginUser") Users inputUser, ModelMap modelMap, HttpSession session){
         String inputUserName = inputUser.getUserName();
