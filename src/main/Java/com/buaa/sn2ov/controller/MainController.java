@@ -2,15 +2,17 @@ package com.buaa.sn2ov.controller;
 
 import com.buaa.sn2ov.model.User;
 import com.buaa.sn2ov.repository.UserRepository;
+import com.buaa.sn2ov.utils.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -23,37 +25,112 @@ public class MainController {
     @Autowired
     UserRepository usersRepository;
 
+    //自动登录到系统
     @RequestMapping(value = "/")
-    public String index() {
-        String a ;
-        return "login";
+    public String index(@ModelAttribute("loginUser") User inputUser, ModelMap modelMap, HttpSession session,HttpServletResponse httpResponse,HttpServletRequest request) {
+
+        //调缓存
+        Cookie cokLoginName = CookieUtils.getCookieByName(request, "loginName");
+        Cookie cokLoginPwd = CookieUtils.getCookieByName(request, "loginPwd");
+        if (cokLoginName != null && cokLoginPwd != null && cokLoginName.getValue() != "" && cokLoginPwd.getValue() != "") {
+            String loginName = cokLoginName.getValue();
+            String loginPwd = cokLoginPwd.getValue();
+
+            //如果此人被删除或者修改密码，因此需要再做验证
+            String password = usersRepository.getPassword(loginName);
+            if(password == null || !loginPwd.equals(password)){
+                String info = "用户名或密码错误";
+                modelMap.addAttribute("loginStatus",info);
+                return "login";
+            }
+
+            List<User> userList = usersRepository.findAll();
+            // 将所有记录传递给要返回的jsp页面，放在userList当中
+            String role = usersRepository.getRoleByUserName(loginName);
+            modelMap.addAttribute("userList", userList);
+            modelMap.addAttribute("userName", loginName);
+            modelMap.addAttribute("userRole", role);
+            return "admin/main";
+        }else
+            return "login";
+
     }
 
     //TODO 登陆到主界面---
     @RequestMapping(value = "/loginAction.do",method = RequestMethod.GET)
-    public String logina(@ModelAttribute("loginUser") User inputUser, ModelMap modelMap, HttpSession session){
-        String inputUserName = inputUser.getUserName();
-        try {
-            inputUserName = new String(inputUserName.getBytes("iso-8859-1"),"UTF-8");
-        }catch (Exception ee){
-            ee.printStackTrace();
-        }
-        String password = usersRepository.getPassword(inputUser.getUserName())+"";
-        if(password == null || !password.equals(inputUser.getPassword())){
-            String info = "用户名或密码错误";
-            modelMap.addAttribute("loginStatus",info);
-            return "login";
-        }else{
-            // 查询user表中所有记录
-            List<User> userList = usersRepository.findAll();
-            // 将所有记录传递给要返回的jsp页面，放在userList当中
-            modelMap.addAttribute("userList", userList);
+    public String logina(@ModelAttribute("loginUser") User inputUser, ModelMap modelMap, HttpSession session,HttpServletResponse httpResponse,HttpServletRequest request){
 
-            session.setAttribute("userName",inputUserName);
-            return "admin/main";
-        }
+//        //调缓存
+//        Cookie cokLoginName = CookieUtils.getCookieByName(request, "loginName");
+//        Cookie cokLoginPwd = CookieUtils.getCookieByName(request, "loginPwd");
+//        if (cokLoginName != null && cokLoginPwd != null && cokLoginName.getValue() != "" && cokLoginPwd.getValue() != "") {
+//            String loginName = cokLoginName.getValue();
+//            String loginPwd = cokLoginPwd.getValue();
+//
+//            //如果此人被删除或者修改密码，因此需要再做验证
+//            String password = usersRepository.getPassword(loginName);
+//            if(password == null || !loginPwd.equals(password)){
+//                String info = "用户名或密码错误";
+//                modelMap.addAttribute("loginStatus",info);
+//                return "login";
+//            }
+//
+//            return "admin/main";
+//        }else{
+            //没有缓存，手动登录
+            String inputUserName = inputUser.getUserName();
+            try {
+                inputUserName = new String(inputUserName.getBytes("iso-8859-1"),"UTF-8");
+            }catch (Exception ee){
+                ee.printStackTrace();
+            }
+            String password = usersRepository.getPassword(inputUser.getUserName())+"";
+            if(password == null || !password.equals(inputUser.getPassword())){
+                String info = "用户名或密码错误";
+                modelMap.addAttribute("loginStatus",info);
+                return "login";
+            }else{
+                //一周的保存时间
+                int loginMaxAge = 7*24*60*60;
+                // 查询user表中所有记录
+                List<User> userList = usersRepository.findAll();
+                // 将所有记录传递给要返回的jsp页面，放在userList当中
+                String role = usersRepository.getRoleByUserName(inputUserName);
+                modelMap.addAttribute("userList", userList);
+                modelMap.addAttribute("userName", inputUserName);
+                modelMap.addAttribute("userRole", role);
+
+                session.setAttribute("userName",inputUserName);
+                CookieUtils.addCookie(httpResponse,"loginName",inputUserName,loginMaxAge);
+                CookieUtils.addCookie(httpResponse,"loginPwd",password,loginMaxAge);
+                return "admin/main";
+            }
+//        }
 
     }
+
+    //登出
+    @RequestMapping(value = "/loginout", method = RequestMethod.GET)
+    public String loginOut(HttpSession session,HttpServletResponse response) {
+        // 清除session
+        CookieUtils.addCookie(response, "loginName", null, 0); // 清除Cookie
+        CookieUtils.addCookie(response, "loginPwd", null, 0); // 清除Cookie
+//        session.invalidate();
+        return "login";
+    }
+
+    @RequestMapping(value = "/admin/main", method = RequestMethod.GET)
+    public String getMainPage(ModelMap modelMap) {
+        // 查询user表中所有记录
+        List<User> userList = usersRepository.findAll();
+
+        // 将所有记录传递给要返回的jsp页面，放在userList当中
+        modelMap.addAttribute("userList", userList);
+
+        // 返回pages目录下的admin/users.jsp页面
+        return "admin/main";
+    }
+
 
     @RequestMapping(value = "/admin/users", method = RequestMethod.GET)
     public String getUsers(ModelMap modelMap) {
@@ -63,8 +140,7 @@ public class MainController {
         // 将所有记录传递给要返回的jsp页面，放在userList当中
         modelMap.addAttribute("userList", userList);
 
-        // 返回pages目录下的admin/users.jsp页面
-        return "admin/users";
+        return "admin/main";
     }
 
     // get请求，访问添加用户 页面
@@ -100,6 +176,15 @@ public class MainController {
         return "admin/userDetail";
     }
 
+    @RequestMapping(value = "/restful/admin/users/show/{id}", method = RequestMethod.POST, consumes = "application/json")
+    public @ResponseBody
+    //如果数据是以json传进来的一定要@RequestBody,用于把传来的JSON 转换成接收的对象
+    User showUserJson(@RequestBody User user) {
+        String test = user.getUserName();
+        return user;
+    }
+
+
     // 更新用户信息 页面
     @RequestMapping(value = "/admin/users/update/{id}", method = RequestMethod.GET)
     public String updateUser(@PathVariable("id") Integer userId, ModelMap modelMap) {
@@ -116,9 +201,9 @@ public class MainController {
     @RequestMapping(value = "/admin/users/updateP", method = RequestMethod.POST)
     public String updateUserPost(@ModelAttribute("userP") User user) {
 
-        // 更新用户信息
-//        usersRepository.updateUser(user.getUserName(), user.getAge(),
-//                 user.getPassword(), user.getId());
+        //更新用户信息
+        usersRepository.updateUser(user.getUid(),user.getUserName(), user.getRealName(),
+                 user.getPassword(), user.getRole(),user.getMobile(),user.getIdCard(),user.getNfc());
         usersRepository.flush(); // 刷新缓冲区
         return "redirect:/admin/users";
     }
@@ -138,16 +223,23 @@ public class MainController {
             modelMap.addAttribute("loginStatus",info);
             return "login";
         }else{
-            // 返回pages目录下的admin/users.jsp页面
+            // 返回pages目录下的admin/users.jsp页2面
             session.setAttribute("userName",inputUserName);
             return "main";
         }
 
     }
 
-    @RequestMapping(value = "/admin/1")
-    public String test(){
-        return "main";
+
+    //删除用户
+    @RequestMapping(value = "/admin/users/delete/{id}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable("id") Integer userId) {
+
+        // 删除id为userId的用户
+        usersRepository.delete(userId);
+        // 立即刷新
+        usersRepository.flush();
+        return "redirect:/admin/users";
     }
 
 }

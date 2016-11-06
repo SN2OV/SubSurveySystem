@@ -8,21 +8,17 @@
 
     <!--</security:http>-->
 
-    <bean id = "CustomUserDetailsService" class="com.buaa.sn2ov.other.CustomUserDetailsService">
-        <property name="datasource" ref="datasource"/>
-    </bean>
+    <!--z暂时注释-->
+    <!--<bean id = "CustomUserDetailsService" class="com.buaa.sn2ov.other.CustomUserDetailsService">-->
+        <!--<property name="datasource" ref="datasource"/>-->
+    <!--</bean>-->
 
-    <!--配置认证管理器-->
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider user-service-ref="CustomUserDetailsService">
-            <security:password-encoder hash="md5"/>
-            <!--<security:jdbc-user-service data-source-ref="datasource"/>-->
-            <!--<security:user-service>-->
-                <!--<security:user name="刘笑凡" password="123456" authorities="ROLE_USER"></security:user>-->
-                <!--<security:user name="roo" password="123456" authorities="ROLE_ADMIN"></security:user>-->
-            <!--</security:user-service>-->
-        </security:authentication-provider>
-    </security:authentication-manager>
+    <!--&lt;!&ndash;配置认证管理器&ndash;&gt;-->
+    <!--<security:authentication-manager alias="authenticationManager">-->
+        <!--<security:authentication-provider user-service-ref="CustomUserDetailsService">-->
+            <!--<security:password-encoder hash="md5"/>-->
+        <!--</security:authentication-provider>-->
+    <!--</security:authentication-manager>-->
 
     <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
@@ -31,17 +27,15 @@
         <property name="password" value="123456"/>
     </bean>
 
-    <!--自动配置七个过滤器-->
-    <security:http auto-config="true">
-        <!--<security:jdbc-user-service data-source-reg = ""/>-->
+    <!--暂时注释-->
+    <!--&lt;!&ndash;自动配置七个过滤器&ndash;&gt;-->
+    <!--<security:http auto-config="true">-->
+        <!--&lt;!&ndash;<security:jdbc-user-service data-source-reg = ""/>&ndash;&gt;-->
 
-        <security:form-login login-page="/"/>
+        <!--<security:form-login login-page="/"/>-->
 
-        <!--<security:intercept-url pattern="/admin/*" access = "hasRole('ROLE_ADMIN')"/>-->
-        <!--<security:intercept-url pattern="/search/*" access = "hasRole('ROLE_USER')"/>-->
-        <security:intercept-url pattern="/admin/*" access = "ROLE_ADMIN"/>
-        <security:intercept-url pattern="/search/*" access = "ROLE_USER"/>
-        <!--<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>-->
-    </security:http>
+        <!--<security:intercept-url pattern="/admin/*" access = "ROLE_ADMIN"/>-->
+        <!--<security:intercept-url pattern="/search/*" access = "ROLE_USER"/>-->
+    <!--</security:http>-->
 
 </beans>

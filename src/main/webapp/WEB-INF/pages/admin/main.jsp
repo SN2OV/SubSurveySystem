@@ -46,7 +46,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">登出（SN2OV/管理员）</a></li>
+                <li><a href="/loginout">登出（${userName}/管理员）</a></li>
                 <%--<li><a href="#">登出</a></li>--%>
             </ul>
         </div>
@@ -71,55 +71,15 @@
             </div>
         </c:if>
 
-        <!-- 如果用户列表非空 -->
-
-        <%--<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">--%>
-            <%--<ol class="breadcrumb">--%>
-                <%--<li><a href="#">用户列表</a></li>--%>
-            <%--</ol>--%>
-
-            <%--<h2 class="sub-header">用户列表</h2>--%>
-            <%--<div class="table-responsive">--%>
-                <%--<c:if test="${!empty userList}">--%>
-                    <%--<table class="table table-bordered table-striped">--%>
-                        <%--<tr>--%>
-                            <%--<th class="tableHeadStyle">ID</th>--%>
-                            <%--<th class="tableHeadStyle">用户名</th>--%>
-                            <%--<th class="tableHeadStyle">角色</th>--%>
-                            <%--<th class="tableHeadStyle">姓名</th>--%>
-                            <%--<th class="tableHeadStyle">电话</th>--%>
-                            <%--<th class="tableHeadStyle">身份证号</th>--%>
-                            <%--<th class="tableHeadStyle">公交卡号</th>--%>
-                            <%--<th class="tableHeadStyle">操作</th>--%>
-                        <%--</tr>--%>
-
-                        <%--<c:forEach items="${userList}" var="user">--%>
-                            <%--<tr>--%>
-                                <%--<td>${user.uid}</td>--%>
-                                <%--<td>${user.userName}</td>--%>
-                                <%--<td>${user.role}</td>--%>
-                                <%--<td>${user.realName}</td>--%>
-                                <%--<td>${user.mobile}</td>--%>
-                                <%--<td>${user.idCard}</td>--%>
-                                <%--<td>${user.nfc}</td>--%>
-                                <%--<td>--%>
-                                    <%--<a href="/admin/users/show/${user.id}" type="button" class="btn btn-sm btn-success">详情</a>--%>
-                                    <%--<a href="/admin/users/update/${user.id}" type="button" class="btn btn-sm btn-warning">修改</a>--%>
-                                    <%--<a href="/admin/users/delete/${user.id}" type="button" class="btn btn-sm btn-danger">删除</a>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
-                        <%--</c:forEach>--%>
-                    <%--</table>--%>
-                <%--</c:if>--%>
-            <%--</div>--%>
-        <%--</div>--%>
 
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
-                <li><a href="#">用户列表</a></li>
+                <li class="active"><a href="#">用户列表</a></li>
                 <%--<li><a href="#">2013</a></li>--%>
-                <%--<li class="active">十一月</li>--%>
+                <a href="/admin/users/add" class="mynavbar-right">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
             </ol>
 
             <h2 class="sub-header">用户列表</h2>
@@ -142,7 +102,7 @@
 
                     <c:forEach items="${userList}" var="user">
                         <tr>
-                            <td>${user.uid}</td>
+                            <td>${userList.indexOf(user)+1}</td>
                             <td>${user.userName}</td>
                             <td>${user.role}</td>
                             <td>${user.realName}</td>
@@ -150,87 +110,20 @@
                             <td>${user.idCard}</td>
                             <td>${user.nfc}</td>
                             <td>
-                                <a href="" title="view">
+                                <%--admin/users/show/${user.uid}--%>
+                                <a class="a_showUsers" index="${userList.indexOf(user)+1}" href="/" title="view">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
-                                <a href="" title="view">
+                                <a href="/admin/users/update/${user.uid}" title="view">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
-                                <a href="" title="view">
+                                <a href="/admin/users/delete/${user.uid}" title="view">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </td>
                         </tr>
                     </c:forEach>
 
-                    <%--<tr>--%>
-                        <%--<td>1</td>--%>
-                        <%--<td>sn2ov</td>--%>
-                        <%--<td>管理员</td>--%>
-                        <%--<td>刘笑凡</td>--%>
-                        <%--<td width="100px">--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-eye-open"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-pencil"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-trash"></span>--%>
-                            <%--</a>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
-                    <%--<tr>--%>
-                        <%--<td>2</td>--%>
-                        <%--<td>zhangsan</td>--%>
-                        <%--<td>组长</td>--%>
-                        <%--<td>张三</td>--%>
-                        <%--<td width="100px">--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-eye-open"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-pencil"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-trash"></span>--%>
-                            <%--</a>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
-                    <%--<tr>--%>
-                        <%--<td>3</td>--%>
-                        <%--<td>lisi</td>--%>
-                        <%--<td>调查员</td>--%>
-                        <%--<td>李四</td>--%>
-                        <%--<td width="100px">--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-eye-open"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-pencil"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-trash"></span>--%>
-                            <%--</a>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
-                    <%--<tr>--%>
-                        <%--<td>4</td>--%>
-                        <%--<td>wangwu</td>--%>
-                        <%--<td>督导</td>--%>
-                        <%--<td>王五</td>--%>
-                        <%--<td width="100px">--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-eye-open"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-pencil"></span>--%>
-                            <%--</a>--%>
-                            <%--<a href="" title="view">--%>
-                                <%--<span class="glyphicon glyphicon-trash"></span>--%>
-                            <%--</a>--%>
-                        <%--</td>--%>
-                    <%--</tr>--%>
                     </tbody>
                 </table>
                 </c:if>
@@ -238,6 +131,7 @@
         </div>
 
     </div>
+
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -245,7 +139,38 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
-<%--<script src="../../assets/js/docs.min.js"></script>--%>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript">
+
+    $(function (){
+        $(".a_showUsers").on('click',function(){
+//            alert("ss");
+            var index = $(this).attr('index');
+            var userDetail = '{"uid":${userList.get(index).uid},"name":"${userList.get(index).userName}","role":"${userList.get(index).role}",'+
+                    '"realName":"${userList.get(index).realName}","mobile":"${userList.get(index).mobile}","idCard":"${userList.get(index).idCard}",'+
+                    '"nfc":"${userList.get(index).nfc}"}';
+
+            $.ajax({
+                type : 'POST',
+                contentType : 'application/json',
+                url : "${pageContext.request.contextPath}/restful/admin/users/show/"+index,
+                processData : false,
+                dataType : 'json',
+                data : userDetail,
+                success : function(data) {
+                    alert(userDetail);
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert('出错了！');
+                }
+            });
+
+            })
+    })
+
+
+</script>
+
 </body>
 </html>
 

@@ -19,15 +19,19 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     // 定义查询
     // @Param注解用于提取参数
     @Query("update User us set us.userName=:qUserName, us.realName=:qRealName, us.password=:qPassword ," +
-            "us.role =:qRole,us.mobile =:qMobile,us.idCard =:qIDCard, us.nfc =:qNFC where us.id=:qId")
-    public void updateUser(@Param("qUserName") String userName, @Param("qRealName") String qRealName,
-                           @Param("qPassword") String password, @Param("qId") Integer id,
-                           @Param("qRole") String role,@Param("qMobile") String mobile,@Param("qIDCard") String IDCard,@Param("qNFC") String NFC);
+            "us.role =:qRole,us.mobile =:qMobile,us.idCard =:qIDCard, us.nfc =:qNFC where us.uid=:qUID")
+    public void updateUser(@Param("qUID") int UId,@Param("qUserName") String userName, @Param("qRealName") String qRealName,
+                           @Param("qPassword") String password, @Param("qRole") String role,
+                           @Param("qMobile") String mobile,@Param("qIDCard") String IDCard,@Param("qNFC") String NFC);
 
     @Query("select u.password from User u where u.userName = :qUserName")
     public String getPassword(@Param("qUserName")String userName);
 
     @Query("select u from User u where u.userName = :qUserName")
     public User findByUserName(@Param("qUserName")String userName);
+
+
+    @Query("select u.role from User u where u.userName = :qUserName")
+    public String getRoleByUserName(@Param("qUserName")String userName);
 
 }
