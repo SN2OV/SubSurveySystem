@@ -1,13 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="war" name="SubSurvey:war">
-    <output-path>$PROJECT_DIR$/classes/artifacts/SubSurvey_war</output-path>
-    <root id="archive" name="SubSurvey_war.war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SpringMvcDemo.war">
       <element id="artifact" artifact-name="SubSurvey:war exploded" />
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="lib" />
-        </element>
-      </element>
     </root>
   </artifact>
 </component>

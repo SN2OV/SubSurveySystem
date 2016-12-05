@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="SpringMvcDemo" />
+        <module name="SubSurvey" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="SpringMvcDemo" target="1.5" />
+      <module name="SubSurvey" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -110,8 +110,8 @@
                             <td>${user.idCard}</td>
                             <td>${user.nfc}</td>
                             <td>
-                                <%--admin/users/show/${user.uid}--%>
-                                <a class="a_showUsers" index="${userList.indexOf(user)+1}" href="/" title="view">
+                                <a href="/admin/users/show/${user.uid}" title="view">
+                                <%--<a class="a_showUsers" index="${userList.indexOf(user)+1}" href="/" title="view">--%>
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
                                 <a href="/admin/users/update/${user.uid}" title="view">
@@ -142,31 +142,31 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script type="text/javascript">
 
-    $(function (){
-        $(".a_showUsers").on('click',function(){
-//            alert("ss");
-            var index = $(this).attr('index');
-            var userDetail = '{"uid":${userList.get(index).uid},"name":"${userList.get(index).userName}","role":"${userList.get(index).role}",'+
-                    '"realName":"${userList.get(index).realName}","mobile":"${userList.get(index).mobile}","idCard":"${userList.get(index).idCard}",'+
-                    '"nfc":"${userList.get(index).nfc}"}';
+    <%--$(function (){--%>
+        <%--$(".a_showUsers").on('click',function(){--%>
+<%--//            alert("ss");--%>
+            <%--var index = $(this).attr('index');--%>
+            <%--var userDetail = '{"uid":${userList.get(index).uid},"name":"${userList.get(index).userName}","role":"${userList.get(index).role}",'+--%>
+                    <%--'"realName":"${userList.get(index).realName}","mobile":"${userList.get(index).mobile}","idCard":"${userList.get(index).idCard}",'+--%>
+                    <%--'"nfc":"${userList.get(index).nfc}"}';--%>
 
-            $.ajax({
-                type : 'POST',
-                contentType : 'application/json',
-                url : "${pageContext.request.contextPath}/restful/admin/users/show/"+index,
-                processData : false,
-                dataType : 'json',
-                data : userDetail,
-                success : function(data) {
-                    alert(userDetail);
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert('出错了！');
-                }
-            });
+            <%--$.ajax({--%>
+                <%--type : 'POST',--%>
+                <%--contentType : 'application/json',--%>
+                <%--url : "${pageContext.request.contextPath}/restful/admin/users/show/"+index,--%>
+                <%--processData : false,--%>
+                <%--dataType : 'json',--%>
+                <%--data : userDetail,--%>
+                <%--success : function(data) {--%>
+                    <%--alert(userDetail);--%>
+                <%--},--%>
+                <%--error : function(XMLHttpRequest, textStatus, errorThrown) {--%>
+                    <%--alert('出错了！');--%>
+                <%--}--%>
+            <%--});--%>
 
-            })
-    })
+            <%--})--%>
+    <%--})--%>
 
 
 </script>
