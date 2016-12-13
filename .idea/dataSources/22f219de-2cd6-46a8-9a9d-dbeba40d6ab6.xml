@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - subsurveysystem@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="subsurveysystem">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bjcj"/>
+    <schema id="4" parent="1" name="information_schema"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="openfiredb"/>
+    <schema id="7" parent="1" name="performance_schema"/>
+    <schema id="8" parent="1" name="sakila"/>
+    <schema id="9" parent="1" name="sschatdb"/>
+    <schema id="10" parent="1" name="testlucene"/>
+    <schema id="11" parent="1" name="world"/>
+    <schema id="12" parent="1" name="youmeoncampus"/>
+    <table id="13" parent="2" name="line">
+      <Comment>线路表</Comment>
+    </table>
+    <table id="14" parent="2" name="user"/>
+    <column id="15" parent="13" name="LID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="16" parent="13" name="LineName">
+      <Position>2</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="17" parent="13" name="IsLooper">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="18" parent="13" name="LineOrder">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;50&apos;</DefaultExpression>
+    </column>
+    <index id="19" parent="13" name="line_Order_uindex">
+      <ColNames>LineOrder</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="20" parent="13" name="PRIMARY">
+      <ColNames>LID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="21" parent="13" name="line_Order_uindex">
+      <ColNames>LineOrder</ColNames>
+      <UnderlyingIndexName>line_Order_uindex</UnderlyingIndexName>
+    </key>
+    <column id="22" parent="14" name="UID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="23" parent="14" name="UserName">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="24" parent="14" name="RealName">
+      <Position>3</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="25" parent="14" name="Password">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="26" parent="14" name="Role">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="27" parent="14" name="Mobile">
+      <Position>6</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="28" parent="14" name="IDCard">
+      <Position>7</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="29" parent="14" name="NFC">
+      <Position>8</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="30" parent="14" name="PRIMARY">
+      <ColNames>UID</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

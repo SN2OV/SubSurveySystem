@@ -1,0 +1,136 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: SN2OV
+  Date: 2016/12/13
+  Time: 23:22
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <%--<link rel="icon" href="../../favicon.ico">--%>
+
+    <title>客流调查系统</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/resources/css/dashboard.css" rel="stylesheet">
+
+    <link href="/resources/css/my.css" rel="stylesheet">
+
+    <link href="/resources/fonts/glyphicons-halflings-regular.woff" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">客流调查系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/loginout">登出（${userName}/管理员）</a></li>
+                <%--<li><a href="#">登出</a></li>--%>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="/admin/users">用户管理</a></li>
+                <li class="active"><a href="#">线路管理</a></li>
+                <li><a href="#">车站管理</a></li>
+                <li><a href="#">使用须知</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <ol class="breadcrumb">
+                <li><a href="/admin/lines">线路列表</a></li>
+                <li class="active"><a href="/">线路新增</a></li>
+                <%--<li class="active">十一月</li>--%>
+            </ol>
+
+            <h2 class="sub-header">线路新增</h2>
+
+            <%--commandName的line很关键,通过该属性来指定我们将使用Model中的哪个属性作为form需要绑定的command对象--%>
+            <form:form action="/admin/lines/updateP" method="post" commandName="line" role="form">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="lineName">线路名称</label>
+                                    <%--input name要和UserEntity对应--%>
+                                <input type="text" class="form-control" id="lineName" name="lineName" placeholder="输入线路名称" value="${line.lineName}"/>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group">
+                                <label for="lineOrder">顺序</label>
+                                <input type="number" class="form-control" id="lineOrder" name="lineOrder" placeholder="输入线路顺序" value="${line.lineOrder}" />
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group">
+                                <label for="isLooper">线路类型</label>
+                                <select class="form-control" id="isLooper" name="isLooper" value="${line.isLooper}" >
+                                    <option>非环线</option>
+                                    <option>环线</option>
+                                </select>
+                                    <%--<input type="number" class="form-control" id="isLooper" name="isLooper" placeholder="输入线路类型"/>--%>
+                            </div>
+                        </td>
+
+                        <td>
+                            <%--必须要有form-group不然提交不出去 name必须和user的成员变量完全一样= = --%>
+                            <div class="form-group">
+                                <input type="hidden" id="lid" name = "lid" value="${line.lid}">
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-sm btn-success">提交</button>
+                </div>
+            </form:form>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<%--<script src="../../assets/js/docs.min.js"></script>--%>
+</body>
+</html>

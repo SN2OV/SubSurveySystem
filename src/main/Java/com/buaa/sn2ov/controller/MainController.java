@@ -176,13 +176,13 @@ public class MainController {
         return "admin/userDetail";
     }
 
-    @RequestMapping(value = "/restful/admin/users/show/{id}", method = RequestMethod.POST, consumes = "application/json")
-    public @ResponseBody
-    //如果数据是以json传进来的一定要@RequestBody,用于把传来的JSON 转换成接收的对象
-    User showUserJson(@RequestBody User user) {
-        String test = user.getUserName();
-        return user;
-    }
+//    @RequestMapping(value = "/restful/admin/users/show/{id}", method = RequestMethod.POST, consumes = "application/json")
+//    public @ResponseBody
+//    //如果数据是以json传进来的一定要@RequestBody,用于把传来的JSON 转换成接收的对象
+//    User showUserJson(@RequestBody User user) {
+//        String test = user.getUserName();
+//        return user;
+//    }
 
 
     // 更新用户信息 页面

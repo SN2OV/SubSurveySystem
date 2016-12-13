@@ -59,8 +59,8 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">用户管理</a></li>
-                <li><a href="#">车站管理</a></li>
                 <li><a href="#">线路管理</a></li>
+                <li><a href="#">车站管理</a></li>
                 <li><a href="#">使用须知</a></li>
             </ul>
         </div>
