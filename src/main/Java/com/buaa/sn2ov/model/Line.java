@@ -4,6 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 /**
  * Created by SN2OV on 2016/12/13.
@@ -26,7 +27,8 @@ public class Line {
     }
 
     @Basic
-    @Column(name = "LineName", nullable = false, length = 20)
+    @Column(name = "lineName", nullable = false, length = 20)
+    @Size(min = 3,max = 20,message = "线路名称必须是3-20位")
     public String getLineName() {
         return lineName;
     }

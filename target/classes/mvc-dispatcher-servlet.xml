@@ -17,6 +17,9 @@
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
 
+    <context:annotation-config />  <!-- 激活Bean中定义的注解 -->
+    <!--<mvc:annotation-driven validator="validator"/>-->
+
 
     <!--ViewResolver 视图解析器-->
     <!--用于支持Servlet、JSP视图解析-->

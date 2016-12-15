@@ -1,3 +1,7 @@
+.tableHeadStyle2{
+    color: #2d6ca2;
+}
+
 .tableHeadStyle{
     color: #2d6ca2;
 }
@@ -6,3 +10,10 @@
     float:right;
     margin-right: 2px;
 }
+
+
+.form-error{
+    color: #ff0000;
+    font-size: 3mm;
+}
+

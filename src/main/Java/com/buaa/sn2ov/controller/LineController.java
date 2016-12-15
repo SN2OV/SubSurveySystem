@@ -5,11 +5,13 @@ import com.buaa.sn2ov.repository.LineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -64,7 +66,7 @@ public class LineController {
 
     // 更新用户信息 页面
     @RequestMapping(value = "/admin/lines/update/{id}", method = RequestMethod.GET)
-    public String updateUser(@PathVariable("id") Integer lineId, ModelMap modelMap) {
+    public String updateLine(@PathVariable("id") Integer lineId, ModelMap modelMap) {
 
         // 找到userId所表示的用户
         Line lineEntity = lineRepository.findOne(lineId);
@@ -74,11 +76,22 @@ public class LineController {
         return "line/updateLine";
     }
 
-    // 更新用户信息 操作
+    //TODO 加上验证 更新线路信息 操作
     @RequestMapping(value = "/admin/lines/updateP", method = RequestMethod.POST)
-    public String updateUserPost(@ModelAttribute("lineP") Line line) {
-
-        //更新用户信息
+    public String updateUserPost(@ModelAttribute("line") Line line, BindingResult result) {
+        //@Valid Line line
+//        if(result.hasErrors()){
+//            return "line/updateLine";
+//            //之前用了
+////            return "redirect:/admin/lines/update/"+line.getLid();
+//        }else{
+//            //更新线路信息
+//            lineRepository.updateLine(line.getLid(),line.getLineName(), line.getLineOrder(),
+//                    line.getIsLooper());
+//            lineRepository.flush(); // 刷新缓冲区
+//            return "redirect:/admin/lines";
+//        }
+        //更新线路信息
         lineRepository.updateLine(line.getLid(),line.getLineName(), line.getLineOrder(),
                 line.getIsLooper());
         lineRepository.flush(); // 刷新缓冲区
