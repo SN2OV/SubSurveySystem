@@ -61,7 +61,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li><a href="/admin/users">用户管理</a></li>
-                <li class="active"><a href="#">线路管理</a></li>
+                <li class="active"><a href="/admin/lines">线路管理</a></li>
                 <li><a href="#">车站管理</a></li>
                 <li><a href="#">使用须知</a></li>
             </ul>
@@ -70,7 +70,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
                 <li><a href="/admin/lines">线路列表</a></li>
-                <li class="active"><a href="/">线路修改</a></li>
+                <li class="active"><a href="/admin/lines/update/${line.lid}">线路修改</a></li>
                 <%--<li class="active">十一月</li>--%>
             </ol>
 
@@ -136,20 +136,20 @@
             <%--</form:form>--%>
 
             <div>
-                <form class="contact_form" action="/admin/lines/updateP" method="post" name="contact_form" commandName="line" role="form">
+                <form:form class="contact_form" action="/admin/lines/updateP" method="post" name="contact_form" commandName="line" role="form">
                     <ul>
                         <li>
                             <label for="name">线路名称</label>
-                            <input id="name" type="text"  placeholder="1号线" value="${line.lineName}" required/>
+                            <input id="name" type="text" name = "lineName"  placeholder="1号线" value="${line.lineName}" required/>
                         </li>
                         <li>
-                            <label for="email">顺序:</label>
-                            <input  id="email" type="text" name="email" placeholder="1" required pattern="[0-9]+$" value="${line.lineOrder}" />
+                            <label for="email">顺序</label>
+                            <input  id="email" type="text" name="lineOrder" placeholder="1" required pattern="[0-9]+$" value="${line.lineOrder}" />
                             <span class="form_hint">请输入数字</span>
                         </li>
                         <li>
-                            <label for="type">线路类型:</label>
-                            <select class="form-control" id="type" name="type" value="${line.isLooper}" >
+                            <label for="type">线路类型</label>
+                            <select class="form-control" id="type" name="isLooper" value="${line.isLooper}" >
                                 <c:set var="lineType" scope="session" value="${line.isLooper}"/>
                                 <c:if test="${lineType=='环线'}">
                                     <option selected>环线</option>
@@ -162,11 +162,17 @@
 
                             </select>
                         </li>
-                        <li>
-                            <button class="submit" type="submit">提交</button>
+
+                        <li style="border-bottom: 0px">
+                            <input type="hidden" id="lid" name = "lid" value="${line.lid}">
                         </li>
+
                     </ul>
-                </form>
+                    <div class="form-group">
+                        <%--<button class="submit" type="submit">提交</button>--%>
+                        <button type="submit" class="btn btn-sm btn-success">提交</button>
+                    </div>
+                </form:form>
 
             </div>
 

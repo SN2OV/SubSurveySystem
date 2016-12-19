@@ -28,6 +28,8 @@
 
     <link href="/resources/fonts/glyphicons-halflings-regular.woff" rel="stylesheet">
 
+    <link rel="stylesheet" media="screen" href="/resources/css/form-validate.css" >
+
 </head>
 
 <body>
@@ -73,40 +75,57 @@
             <h2 class="sub-header">线路新增</h2>
 
             <%--commandName的line很关键,通过该属性来指定我们将使用Model中的哪个属性作为form需要绑定的command对象--%>
-            <form:form action="/admin/lines/addP" method="post" commandName="line" role="form">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="lineName">线路名称</label>
-                                    <%--input name要和UserEntity对应--%>
-                                <input type="text" class="form-control" id="lineName" name="lineName" placeholder="输入线路名称"/>
-                            </div>
-                        </td>
+            <form:form class="contact_form" action="/admin/lines/addP" method="post" commandName="line" role="form">
+                <%--<table>--%>
+                    <%--<tr>--%>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="lineName">线路名称</label>--%>
+                                    <%--&lt;%&ndash;input name要和UserEntity对应&ndash;%&gt;--%>
+                                <%--<input type="text" class="form-control" id="lineName" name="lineName" placeholder="输入线路名称"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                        <td>
-                            <div class="form-group">
-                                <label for="lineOrder">顺序</label>
-                                <input type="number" class="form-control" id="lineOrder" name="lineOrder" placeholder="输入线路顺序"/>
-                            </div>
-                        </td>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="lineOrder">顺序</label>--%>
+                                <%--<input type="number" class="form-control" id="lineOrder" name="lineOrder" placeholder="输入线路顺序"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                        <td>
-                            <div class="form-group">
-                                <label for="isLooper">线路类型</label>
-                                <select class="form-control" id="isLooper" name="isLooper" >
-                                    <option>非环线</option>
-                                    <option>环线</option>
-                                </select>
-                                <%--<input type="number" class="form-control" id="isLooper" name="isLooper" placeholder="输入线路类型"/>--%>
-                            </div>
-                        </td>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="isLooper">线路类型</label>--%>
+                                <%--<select class="form-control" id="isLooper" name="isLooper" >--%>
+                                    <%--<option>非环线</option>--%>
+                                    <%--<option>环线</option>--%>
+                                <%--</select>--%>
+                                <%--&lt;%&ndash;<input type="number" class="form-control" id="isLooper" name="isLooper" placeholder="输入线路类型"/>&ndash;%&gt;--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                    </tr>
+                    <%--</tr>--%>
 
-                </table>
+                <%--</table>--%>
+                <ul>
+                <li>
+                    <label for="name">线路名称</label>
+                    <input id="name" type="text" name = "lineName"  placeholder="1号线" required/>
+                </li>
+                <li>
+                    <label for="email">顺序</label>
+                    <input  id="email" type="text" name="lineOrder" placeholder="1" required pattern="[0-9]+$" />
+                    <span class="form_hint">请输入数字</span>
+                </li>
+                <li>
+                    <label for="type">线路类型</label>
+                    <select class="form-control" id="type" name="isLooper" >
+                        <option selected>环线</option>
+                        <option>非环线</option>
+                    </select>
+                </li>
 
-
+            </ul>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-sm btn-success">提交</button>

@@ -28,6 +28,8 @@
 
     <link href="/resources/css/my.css" rel="stylesheet">
 
+    <link rel="stylesheet" media="screen" href="/resources/css/form-validate.css" >
+
     <link href="/resources/fonts/glyphicons-halflings-regular.woff" rel="stylesheet">
 
 </head>
@@ -58,8 +60,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">用户管理</a></li>
-                <li><a href="#">线路管理</a></li>
+                <li class="active"><a href="/admin/users">用户管理</a></li>
+                <li><a href="/admin/lines">线路管理</a></li>
                 <li><a href="#">车站管理</a></li>
                 <li><a href="#">使用须知</a></li>
             </ul>
@@ -68,72 +70,120 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
                 <li><a href="/admin/main">用户列表</a></li>
-                <li class="active"><a href="/">用户新增</a></li>
+                <li class="active"><a href="/admin/users/add">用户新增</a></li>
                 <%--<li class="active">十一月</li>--%>
             </ol>
 
             <h2 class="sub-header">用户新增</h2>
 
             <%--commandName的user很关键,通过该属性来指定我们将使用Model中的哪个属性作为form需要绑定的command对象--%>
-            <form:form action="/admin/users/addP" method="post" commandName="user" role="form">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="userName">用户名</label>
-                                    <%--input name要和UserEntity对应--%>
-                                <input type="text" class="form-control" id="userName" name="userName" placeholder="输入用户名:"/>
-                            </div>
-                        </td>
+            <form:form action="/admin/users/addP" class="contact_form" method="post" commandName="user" role="form">
+                <%--<table>--%>
+                    <%--<tr>--%>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="userName">用户名</label>--%>
+                                    <%--&lt;%&ndash;input name要和UserEntity对应&ndash;%&gt;--%>
+                                <%--<input type="text" class="form-control" id="userName" name="userName" placeholder="输入用户名:"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                        <td>
-                            <div class="form-group">
-                                <label for="password">密码</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="输入密码"/>
-                            </div>
-                        </td>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="password">密码</label>--%>
+                                <%--<input type="password" class="form-control" id="password" name="password" placeholder="输入密码"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                       <td>
-                           <div class="form-group">
-                               <label for="realName">姓名</label>
-                               <input type="text" class="form-control" id="realName" name="realName" placeholder="输入姓名"/>
-                           </div>
-                       </td>
+                       <%--<td>--%>
+                           <%--<div class="form-group">--%>
+                               <%--<label for="realName">姓名</label>--%>
+                               <%--<input type="text" class="form-control" id="realName" name="realName" placeholder="输入姓名"/>--%>
+                           <%--</div>--%>
+                       <%--</td>--%>
 
-                    </tr>
+                    <%--</tr>--%>
 
-                    <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="role">角色</label>
-                                    <%--input name要和UserEntity对应--%>
-                                <input type="text" class="form-control" id="role" name="role" placeholder="输入角色"/>
-                            </div>
-                        </td>
+                    <%--<tr>--%>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="role">角色</label>--%>
+                                    <%--&lt;%&ndash;input name要和UserEntity对应&ndash;%&gt;--%>
+                                <%--<input type="text" class="form-control" id="role" name="role" placeholder="输入角色"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                        <td>
-                            <div class="form-group">
-                                <label for="mobile">手机号</label>
-                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="输入手机号"/>
-                            </div>
-                        </td>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="mobile">手机号</label>--%>
+                                <%--<input type="text" class="form-control" id="mobile" name="mobile" placeholder="输入手机号"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                        <td>
-                            <div class="form-group">
-                                <label for="idCard">身份证号</label>
-                                <input type="text" class="form-control" id="idCard" name="idCard" placeholder="输入身份证号"/>
-                            </div>
-                        </td>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="idCard">身份证号</label>--%>
+                                <%--<input type="text" class="form-control" id="idCard" name="idCard" placeholder="输入身份证号"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
 
-                        <td>
-                            <div class="form-group">
-                                <label for="nfc">公交卡号</label>
-                                <input type="text" class="form-control" id="nfc" name="nfc" placeholder="输入公交卡号"/>
-                            </div>
-                        </td>
-                    </tr>
+                        <%--<td>--%>
+                            <%--<div class="form-group">--%>
+                                <%--<label for="nfc">公交卡号</label>--%>
+                                <%--<input type="text" class="form-control" id="nfc" name="nfc" placeholder="输入公交卡号"/>--%>
+                            <%--</div>--%>
+                        <%--</td>--%>
+                    <%--</tr>--%>
 
-                </table>
+                <%--</table>--%>
+
+                <ul>
+                    <li>
+                        <label for="userName">用户名</label>
+                        <input id="userName" type="text" name = "userName"  placeholder="" required/>
+                    </li>
+                    <li>
+                        <label for="password">密码</label>
+                        <input id="password" type="password" name = "password"  placeholder="" required/>
+                    </li>
+                    <li>
+                        <label for="realName">姓名</label>
+                        <input id="realName" type="text" name = "realName"  placeholder="" required/>
+                    </li>
+                    <li>
+                        <label for="role">角色</label>
+                        <%--<input id="role" type="text" name = "role"  placeholder="调查员" required/>--%>
+                        <select class="form-control" id="role" name="role" >
+                            <option selected>调查员</option>
+                            <option>组长</option>
+                            <option>督导</option>
+                            <option>管理员</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="mobile">手机号</label>
+                        <input  id="mobile" type="text" name="mobile" placeholder="" required pattern="[0-9]+$" />
+                        <span class="form_hint">请输入数字</span>
+                    </li>
+                    <li>
+                        <label for="idCard">身份证号</label>
+                        <input  id="idCard" type="text" name="idCard" placeholder="" required pattern="[0-9]+$" />
+                        <span class="form_hint">请输入数字</span>
+                    </li>
+                    <li>
+                        <label for="nfc">公交卡号</label>
+                        <input  id="nfc" type="text" name="nfc" placeholder="" required pattern="[0-9]+$" />
+                        <span class="form_hint">请输入数字</span>
+                    </li>
+                    <%--<li>--%>
+                        <%--<label for="type">线路类型:</label>--%>
+                        <%--<select class="form-control" id="type" name="isLooper" >--%>
+                            <%--<option selected>环线</option>--%>
+                            <%--<option>非环线</option>--%>
+                        <%--</select>--%>
+                    <%--</li>--%>
+
+                </ul>
 
 
 

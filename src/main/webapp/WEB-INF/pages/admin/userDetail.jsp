@@ -57,8 +57,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">用户管理</a></li>
-                <li><a href="#">线路管理</a></li>
+                <li class="active"><a href="/admin/users">用户管理</a></li>
+                <li><a href="/admin/lines">线路管理</a></li>
                 <li><a href="#">车站管理</a></li>
                 <li><a href="#">使用须知</a></li>
             </ul>
@@ -67,7 +67,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
                 <li><a href="/admin/main">用户列表</a></li>
-                <li class="active"><a href="#">用户详情(${user.realName})</a></li>
+                <li class="active"><a href="/admin/users/show/${user.uid}">用户详情(${user.realName})</a></li>
                 <%--<li class="active">十一月</li>--%>
             </ol>
 

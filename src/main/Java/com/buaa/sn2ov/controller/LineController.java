@@ -78,7 +78,7 @@ public class LineController {
 
     //TODO 加上验证 更新线路信息 操作
     @RequestMapping(value = "/admin/lines/updateP", method = RequestMethod.POST)
-    public String updateUserPost(@ModelAttribute("line") Line line, BindingResult result) {
+    public String updateUserPost(@ModelAttribute("line") Line line) {
         //@Valid Line line
 //        if(result.hasErrors()){
 //            return "line/updateLine";

@@ -28,7 +28,7 @@ public class Line {
 
     @Basic
     @Column(name = "lineName", nullable = false, length = 20)
-    @Size(min = 3,max = 20,message = "线路名称必须是3-20位")
+//    @Size(min = 3,max = 20,message = "线路名称必须是3-20位")
     public String getLineName() {
         return lineName;
     }
