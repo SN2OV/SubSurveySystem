@@ -1,3 +1,4 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -59,17 +60,10 @@
             <ul class="nav nav-sidebar">
                 <li><a href="/admin/users">用户管理</a></li>
                 <li class="active"><a href="#">线路管理</a></li>
-                <li><a href="#">车站管理</a></li>
+                <li><a href="/admin/stations">车站管理</a></li>
                 <li><a href="#">使用须知</a></li>
             </ul>
         </div>
-
-        <!-- 如果线路列表为空 -->
-        <c:if test="${empty lineList}">
-            <div class="alert alert-warning" role="alert">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Line表为空，请<a href="/admin/lines/add" type="button" class="btn btn-primary btn-sm">添加</a>
-            </div>
-        </c:if>
 
 
 
@@ -83,6 +77,13 @@
             </ol>
 
             <h2 class="sub-header">线路列表</h2>
+            <!-- 如果线路列表为空 -->
+            <c:if test="${empty lineList}">
+                <div class="alert alert-warning" role="alert">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>系统暂无线路
+                </div>
+            </c:if>
+
             <div class="table-responsive">
                 <c:if test="${!empty lineList}">
                     <table class="table table-striped table-bordered">
@@ -92,17 +93,24 @@
                             <th class="tableHeadStyle">线路名称</th>
                             <th class="tableHeadStyle">顺序</th>
                             <th class="tableHeadStyle">线路类型</th>
+                            <th class="tableHeadStyle">车站数量</th>
                             <th class="tableHeadStyle">操作</th>
                         </tr>
                         </thead>
                         <tbody>
 
+                        <%--<%--%>
+                            <%--ArrayList<Integer> linesArr = (ArrayList<Integer>)request.getAttribute("lineCountArr");--%>
+                        <%--%>--%>
                         <c:forEach items="${lineList}" var="line">
                             <tr>
                                 <td>${lineList.indexOf(line)+1}</td>
                                 <td>${line.lineName}</td>
                                 <td>${line.lineOrder}</td>
+
                                 <td>${line.isLooper}</td>
+                                <td><a href="#">${lineCountArr.get(lineList.indexOf(line))}</a></td>
+
                                 <td>
                                     <a href="/admin/lines/show/${line.lid}" title="view">
                                             <%--<a class="a_showUsers" index="${userList.indexOf(user)+1}" href="/" title="view">--%>

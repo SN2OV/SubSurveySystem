@@ -59,19 +59,10 @@
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">用户管理</a></li>
                 <li><a href="/admin/lines">线路管理</a></li>
-                <li><a href="#">车站管理</a></li>
+                <li><a href="/admin/stations">车站管理</a></li>
                 <li><a href="#">使用须知</a></li>
             </ul>
         </div>
-
-        <!-- 如果用户列表为空 -->
-        <c:if test="${empty userList}">
-            <div class="alert alert-warning" role="alert">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>User表为空，请<a href="/admin/users/add" type="button" class="btn btn-primary btn-sm">添加</a>
-            </div>
-        </c:if>
-
-
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
@@ -83,6 +74,14 @@
             </ol>
 
             <h2 class="sub-header">用户列表</h2>
+
+            <!-- 如果用户列表为空 -->
+            <c:if test="${empty userList}">
+                <div class="alert alert-warning" role="alert">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>系统暂无用户
+                </div>
+            </c:if>
+
             <div class="table-responsive">
                 <c:if test="${!empty userList}">
                 <table class="table table-striped table-bordered">

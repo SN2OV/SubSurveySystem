@@ -2,16 +2,19 @@ package com.buaa.sn2ov.controller;
 
 import com.buaa.sn2ov.model.Line;
 import com.buaa.sn2ov.repository.LineRepository;
+import com.buaa.sn2ov.repository.StationLineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,26 +28,29 @@ public class LineController {
     // 自动装配数据库接口-----
     @Autowired
     LineRepository lineRepository;
+    @Autowired
+    StationLineRepository stationLineRepository;
 
     @RequestMapping(value = "/admin/lines", method = RequestMethod.GET)
     public String getMainPage(ModelMap modelMap) {
 
         List<Line> lineList = lineRepository.findAll();
-
-        // 将所有记录传递给要返回的jsp页面，放在lineList当中
         modelMap.addAttribute("lineList", lineList);
-
-        // 返回pages目录下的line/lineMain.jsp页面
+        ArrayList<Integer> lineCountArr = new ArrayList<Integer>();
+        //TODO 加入线路车辆数
+        for(Line line : lineList){
+            //由于hiberate返回的是long,所以必须要强制转换为int,否则无法
+            int lineCount = (int)stationLineRepository.getLineNumByID(line.getLid());
+            lineCountArr.add(lineCount);
+        }
+        modelMap.addAttribute("lineCountArr", lineCountArr);
         return "line/lineMain";
     }
 
     @RequestMapping(value = "/admin/lines/show/{id}", method = RequestMethod.GET)
     public String showUser(@PathVariable("id") Integer lineId, ModelMap modelMap) {
 
-        // 找到userId所表示的用户
         Line lineEntity = lineRepository.findOne(lineId);
-
-        // 传递给请求页面
         modelMap.addAttribute("line", lineEntity);
         return "line/lineDetail";
     }
@@ -107,11 +113,9 @@ public class LineController {
 
     //删除线路
     @RequestMapping(value = "/admin/lines/delete/{id}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("id") Integer lineId) {
+    public String deleteLine(@PathVariable("id") Integer lineId) {
 
-        // 删除id为userId的用户
         lineRepository.delete(lineId);
-        // 立即刷新
         lineRepository.flush();
         return "redirect:/admin/lines";
     }
