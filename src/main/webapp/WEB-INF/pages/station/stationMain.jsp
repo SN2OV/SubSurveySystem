@@ -110,11 +110,11 @@
                                 <c:set var = "lineList" value="${linesArr.get(stationList.indexOf(station))}"></c:set>
                                 <td>
                                     <c:forEach items="${lineList}" var="line">
-                                        <%--<c:set var = "a1" value="${lineList.indexOf(line)==lineList.size()-1}"></c:set>--%>
-                                        <%--<% System.out.println( "a1= " + pageContext.findAttribute("a1") ); %>--%>
-                                        <%--<% System.out.println( "a2= " + pageContext.findAttribute("a2") ); %>--%>
+                                        <a href="lines/line-stations/${line.lid}">
+                                        ${line.lineName}
+                                            <%--""--%>
+                                        </a>
 
-                                        <a href="#">${line}</a>
                                         <c:if test="${lineList.indexOf(line)!=lineList.size()-1}">
                                             ,
                                         </c:if>

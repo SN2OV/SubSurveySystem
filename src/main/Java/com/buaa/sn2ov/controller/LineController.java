@@ -1,8 +1,11 @@
 package com.buaa.sn2ov.controller;
 
 import com.buaa.sn2ov.model.Line;
+import com.buaa.sn2ov.model.LineStationRl;
+import com.buaa.sn2ov.model.Station;
 import com.buaa.sn2ov.repository.LineRepository;
 import com.buaa.sn2ov.repository.StationLineRepository;
+import com.buaa.sn2ov.repository.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,6 +33,8 @@ public class LineController {
     LineRepository lineRepository;
     @Autowired
     StationLineRepository stationLineRepository;
+    @Autowired
+    StationRepository stationRepository;
 
     @RequestMapping(value = "/admin/lines", method = RequestMethod.GET)
     public String getMainPage(ModelMap modelMap) {
@@ -37,7 +42,6 @@ public class LineController {
         List<Line> lineList = lineRepository.findAll();
         modelMap.addAttribute("lineList", lineList);
         ArrayList<Integer> lineCountArr = new ArrayList<Integer>();
-        //TODO 加入线路车辆数
         for(Line line : lineList){
             //由于hiberate返回的是long,所以必须要强制转换为int,否则无法
             int lineCount = (int)stationLineRepository.getLineNumByID(line.getLid());
@@ -46,6 +50,29 @@ public class LineController {
         modelMap.addAttribute("lineCountArr", lineCountArr);
         return "line/lineMain";
     }
+
+    @RequestMapping(value = "admin/lines/line-stations/{lineID}",method = RequestMethod.GET)
+    public String getStationByLineID(@PathVariable("lineID") Integer lineID, ModelMap modelMap){
+        //传值：车站列表
+        List<Station> stationList = stationLineRepository.getStationNameByLineID(lineID);
+        List<Integer> stationOrderArr = new ArrayList<Integer>();
+        for(Station station : stationList){
+            int stationOrder = stationLineRepository.getStationOrderByLSID(lineID,station.getSid());
+            stationOrderArr.add(stationOrder);
+        }
+        modelMap.addAttribute("stationList",stationList);
+        //传值：车站顺序
+        modelMap.addAttribute("stationOrderArr",stationOrderArr);
+        //传值：路线名称
+        Line line = lineRepository.findLineByID(lineID);
+        modelMap.addAttribute("line",line);
+        //传值：所有车站-当前线路列表
+        List<Station> stationNotInLineList = stationLineRepository.getStationNotInLineID(lineID);
+        modelMap.addAttribute("stationNotInLineList",stationNotInLineList);
+
+        return "line/lineStationList";
+    }
+
 
     @RequestMapping(value = "/admin/lines/show/{id}", method = RequestMethod.GET)
     public String showUser(@PathVariable("id") Integer lineId, ModelMap modelMap) {
@@ -82,7 +109,6 @@ public class LineController {
         return "line/updateLine";
     }
 
-    //TODO 加上验证 更新线路信息 操作
     @RequestMapping(value = "/admin/lines/updateP", method = RequestMethod.POST)
     public String updateUserPost(@ModelAttribute("line") Line line) {
         //@Valid Line line
@@ -104,13 +130,6 @@ public class LineController {
         return "redirect:/admin/lines";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test() {
-        String a = null;
-        return "admin/lines";
-    }
-
-
     //删除线路
     @RequestMapping(value = "/admin/lines/delete/{id}", method = RequestMethod.GET)
     public String deleteLine(@PathVariable("id") Integer lineId) {
@@ -118,6 +137,28 @@ public class LineController {
         lineRepository.delete(lineId);
         lineRepository.flush();
         return "redirect:/admin/lines";
+    }
+
+    @RequestMapping(value = "/admin/lines/line-stations/addP/{id}", method = RequestMethod.POST)
+    public String addLineStation(@PathVariable("id")Integer lineId,@ModelAttribute("stationLineAdd") String stationName){
+        int stationID = stationRepository.getStationIDByName(stationName);
+        long stationOrder = stationLineRepository.getLineNumByID(lineId)+1;
+        LineStationRl lineStation = new LineStationRl();
+        lineStation.setLineId(lineId);
+        lineStation.setStationId(stationID);
+        lineStation.setStationOrder((int)stationOrder);
+        stationLineRepository.saveAndFlush(lineStation);
+        return "redirect:/admin/lines/line-stations/"+lineId;
+    }
+
+    @RequestMapping(value = "/admin/lines/line-stations/delete/{lid_sid}",method = RequestMethod.GET)
+    public String deleteStationLineRL(@PathVariable("lid_sid")String l_sID){
+        //传不进来值，因为之前使用了${}
+        String[] lsArr = l_sID.split("_");
+        int lineId = Integer.parseInt(lsArr[0]);
+        int stationId = Integer.parseInt(lsArr[1]);
+        stationLineRepository.delRLByLineIDAndStationID(lineId,stationId);
+        return "redirect:/admin/lines/line-stations/"+lineId;
     }
 
 }

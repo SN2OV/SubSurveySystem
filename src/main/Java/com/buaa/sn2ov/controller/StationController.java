@@ -33,11 +33,10 @@ public class StationController {
 
         List<Station> stationList = stationRepository.findAll();
         modelMap.addAttribute("stationList", stationList);
-        //TODO 传入线路列表
-        ArrayList<List<Line>> linesArr = new ArrayList<List<Line>>();
+        ArrayList<List<Line>> linesArr = new ArrayList<List<Line>>  ();
         for(Station station : stationList){
             int sid = station.getSid();
-            List<Line> lineList = stationLineRepository.findLineByStationID(sid);
+            List<Line> lineList = stationLineRepository.getLineByStationID(sid);
             linesArr.add(lineList);
         }
         modelMap.addAttribute("linesArr", linesArr);

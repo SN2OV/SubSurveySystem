@@ -19,7 +19,7 @@ public interface LineRepository extends JpaRepository<Line,Integer> {
     @Query("update Line line set line.lineName=:qLineName, line.lineOrder=:qLineOrder, line.isLooper=:qIsLooper where line.lid=:qLID")
     public void updateLine(@Param("qLID") int UId, @Param("qLineName") String qLineName, @Param("qLineOrder") int qLineOrder, @Param("qIsLooper") String qIsLooper);
 
-    @Query("select lineName,lineOrder,isLooper from Line line where line.lid=:qLID")
+    @Query("select line from Line line where line.lid=:qLID")
     public Line findLineByID(@Param("qLID")int qLID);
 
 }

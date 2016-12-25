@@ -109,7 +109,7 @@
                                 <td>${line.lineOrder}</td>
 
                                 <td>${line.isLooper}</td>
-                                <td><a href="#">${lineCountArr.get(lineList.indexOf(line))}</a></td>
+                                <td><a href="lines/line-stations/${line.lid}">${lineCountArr.get(lineList.indexOf(line))}</a></td>
 
                                 <td>
                                     <a href="/admin/lines/show/${line.lid}" title="view">

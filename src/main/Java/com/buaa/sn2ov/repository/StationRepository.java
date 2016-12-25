@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by SN2OV on 2016/12/19.
  */
@@ -21,5 +23,9 @@ public interface StationRepository extends JpaRepository<Station,Integer> {
 
     @Query("select stationName,stationType from Station station where station.sid=:qSID")
     public Station findStationByID(@Param("qSID")int qSID);
+
+    @Query("select sid from Station station where station.stationName =:qStationName")
+    public int getStationIDByName(@Param("qStationName") String stationName);
+
 
 }
