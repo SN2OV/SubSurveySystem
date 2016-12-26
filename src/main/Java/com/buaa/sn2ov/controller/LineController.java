@@ -54,7 +54,12 @@ public class LineController {
     @RequestMapping(value = "admin/lines/line-stations/{lineID}",method = RequestMethod.GET)
     public String getStationByLineID(@PathVariable("lineID") Integer lineID, ModelMap modelMap){
         //传值：车站列表
-        List<Station> stationList = stationLineRepository.getStationNameByLineID(lineID);
+//        List<Station> stationList = stationLineRepository.getStationNameByLineID(lineID);
+        List<Integer> stationIDList = stationLineRepository.getStationIDByLineID(lineID);
+        List<Station> stationList = new ArrayList<Station>();
+        for(int sid : stationIDList){
+            stationList.add(stationRepository.findOne(sid));
+        }
         List<Integer> stationOrderArr = new ArrayList<Integer>();
         for(Station station : stationList){
             int stationOrder = stationLineRepository.getStationOrderByLSID(lineID,station.getSid());
@@ -160,5 +165,43 @@ public class LineController {
         stationLineRepository.delRLByLineIDAndStationID(lineId,stationId);
         return "redirect:/admin/lines/line-stations/"+lineId;
     }
+
+    // 车站在线路中向上排序
+    @RequestMapping(value = "/admin/lines/line-stations/up/{lid_sid}",method = RequestMethod.GET)
+    public String sortStationUpByID(@PathVariable("lid_sid")String l_sID){
+        String[] lsArr = l_sID.split("_");
+        int lineId = Integer.parseInt(lsArr[0]);
+        int stationId = Integer.parseInt(lsArr[1]);
+        //1)根据lsID获取需要修改的order
+        int editOrder = stationLineRepository.getStationOrderByLSID(lineId,stationId);
+        //2)将老order(up)设置成需要修改的order,对
+        int upOrder = editOrder - 1;
+        if(upOrder == 0)
+            return "redirect:/admin/lines/line-stations/"+lineId;
+        stationLineRepository.updateStationOrderByOrder(editOrder,upOrder);
+        //3)根据lsID设置新的order(up)
+        stationLineRepository.updateStationOrderByLsId(upOrder,lineId,stationId);
+        return "redirect:/admin/lines/line-stations/"+lineId;
+    }
+
+    //TODO 车站在线路中向下排序
+    @RequestMapping(value = "/admin/lines/line-stations/down/{lid_sid}",method = RequestMethod.GET)
+    public String sortStationDownByID(@PathVariable("lid_sid")String l_sID){
+        String[] lsArr = l_sID.split("_");
+        int lineId = Integer.parseInt(lsArr[0]);
+        int stationId = Integer.parseInt(lsArr[1]);
+        long stationCount = stationLineRepository.getLineNumByID(lineId);
+        //1)根据lsID获取需要修改的order
+        int editOrder = stationLineRepository.getStationOrderByLSID(lineId,stationId);
+        //2)将老order(up)设置成需要修改的order,对
+        int downOrder = editOrder + 1;
+        if(downOrder > stationCount)
+            return "redirect:/admin/lines/line-stations/"+lineId;
+        stationLineRepository.updateStationOrderByOrder(editOrder,downOrder);
+        //3)根据lsID设置新的order(up)
+        stationLineRepository.updateStationOrderByLsId(downOrder,lineId,stationId);
+        return "redirect:/admin/lines/line-stations/"+lineId;
+    }
+
 
 }

@@ -59,7 +59,7 @@
                 <li><a href="/admin/users">用户管理</a></li>
                 <li class="active"><a href="/admin/lines">线路管理</a></li>
                 <li><a href="/admin/stations">车站管理</a></li>
-                <li><a href="#">使用须知</a></li>
+                <li><a href="/admin/ReadMe">使用须知</a></li>
             </ul>
         </div>
 
@@ -111,10 +111,10 @@
 
                                 <td>
                                     <%--TODO 排序--%>
-                                    <a href="/admin/lines/line-stations/up/${line.lid}" title="view">
+                                    <a href="/admin/lines/line-stations/up/${line.lid}_${station.sid}" title="view">
                                         <span class="glyphicon glyphicon-arrow-up"></span>
                                     </a>
-                                    <a href="/admin/lines/line-stations/down/${line.lid}" title="view">
+                                    <a href="/admin/lines/line-stations/down/${line.lid}_${station.sid}" title="view">
                                         <span class="glyphicon glyphicon-arrow-down"></span>
                                     </a>
                                     <a href="/admin/lines/line-stations/delete/${line.lid}_${station.sid}" title="view">

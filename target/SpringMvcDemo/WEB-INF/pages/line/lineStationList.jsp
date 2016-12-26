@@ -111,10 +111,10 @@
 
                                 <td>
                                     <%--TODO 排序--%>
-                                    <a href="/admin/lines/line-stations/up/${line.lid}" title="view">
+                                    <a href="/admin/lines/line-stations/up/${line.lid}_${station.sid}" title="view">
                                         <span class="glyphicon glyphicon-arrow-up"></span>
                                     </a>
-                                    <a href="/admin/lines/line-stations/down/${line.lid}" title="view">
+                                    <a href="/admin/lines/line-stations/down/${line.lid}_${station.sid}" title="view">
                                         <span class="glyphicon glyphicon-arrow-down"></span>
                                     </a>
                                     <a href="/admin/lines/line-stations/delete/${line.lid}_${station.sid}" title="view">

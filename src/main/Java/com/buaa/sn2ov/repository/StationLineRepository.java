@@ -25,6 +25,9 @@ public interface StationLineRepository extends JpaRepository<LineStationRl,Integ
     @Query("select station from Station station where sid in(select stationId from LineStationRl where lineId =:qLineID order by stationOrder)")
     public List<Station> getStationNameByLineID(@Param("qLineID") int lineID);
 
+    @Query("select stationId from LineStationRl where lineId =:qLineID order by stationOrder")
+    public List<Integer> getStationIDByLineID(@Param("qLineID") int lineID);
+
     @Query("select stationOrder from LineStationRl where stationId =:qSID and lineId =:qLID")
     public int getStationOrderByLSID(@Param("qLID") int lineID,@Param("qSID") int stationID);
 
@@ -36,5 +39,17 @@ public interface StationLineRepository extends JpaRepository<LineStationRl,Integ
     @Transactional
     @Query("delete from LineStationRl line_station_rl where line_station_rl.lineId =:qLineID and line_station_rl.stationId =:qStationID")
     public void delRLByLineIDAndStationID(@Param("qLineID") int qLineID,@Param("qStationID") int qStationID);
+
+    @Modifying
+    @Transactional
+    @Query("update LineStationRl line_station_rl set stationOrder =:qNewOrder where stationOrder =:qOldOrder")
+    public void updateStationOrderByOrder(@Param("qNewOrder") int newOrder,@Param("qOldOrder") int oldOrder);
+
+    @Modifying
+    @Transactional
+    @Query("update LineStationRl line_station_rl set stationOrder =:qNewOrder where lineId =:qLID and stationId =:qSID")
+    public void updateStationOrderByLsId(@Param("qNewOrder") int newOrder,@Param("qLID") int lineID,@Param("qSID") int stationID);
+
+
 
 }

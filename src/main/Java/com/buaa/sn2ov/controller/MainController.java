@@ -242,4 +242,9 @@ public class MainController {
         return "redirect:/admin/users";
     }
 
+    @RequestMapping(value = "/admin/ReadMe", method = RequestMethod.GET)
+    public String gotoReadMe() {
+        return "/admin/ReadMe";
+    }
+
 }

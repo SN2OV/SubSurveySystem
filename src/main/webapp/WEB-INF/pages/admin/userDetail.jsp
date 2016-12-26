@@ -60,7 +60,7 @@
                 <li class="active"><a href="/admin/users">用户管理</a></li>
                 <li><a href="/admin/lines">线路管理</a></li>
                 <li><a href="/admin/stations">车站管理</a></li>
-                <li><a href="#">使用须知</a></li>
+                <li><a href="/admin/ReadMe">使用须知</a></li>
             </ul>
         </div>
 
