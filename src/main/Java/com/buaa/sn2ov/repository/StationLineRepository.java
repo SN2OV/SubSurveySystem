@@ -1,8 +1,8 @@
 package com.buaa.sn2ov.repository;
 
-import com.buaa.sn2ov.model.Line;
-import com.buaa.sn2ov.model.LineStationRl;
-import com.buaa.sn2ov.model.Station;
+import com.buaa.sn2ov.model.Admin.Line;
+import com.buaa.sn2ov.model.Admin.LineStationRl;
+import com.buaa.sn2ov.model.Admin.Station;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

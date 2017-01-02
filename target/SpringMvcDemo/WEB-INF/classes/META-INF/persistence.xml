@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="SubwayPersistenceUnit">
-        <class>com.buaa.sn2ov.model.User</class>
-        <class>com.buaa.sn2ov.model.Line</class>
-        <class>com.buaa.sn2ov.model.Station</class>
-        <class>com.buaa.sn2ov.model.LineStationRl</class>
+        <class>com.buaa.sn2ov.model.Admin.User</class>
+        <class>com.buaa.sn2ov.model.Admin.Line</class>
+        <class>com.buaa.sn2ov.model.Admin.Station</class>
+        <class>com.buaa.sn2ov.model.Admin.LineStationRl</class>
         <properties>
             <property name="dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/subsurveysystem"/>

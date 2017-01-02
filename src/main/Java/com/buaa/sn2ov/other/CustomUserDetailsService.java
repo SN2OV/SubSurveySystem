@@ -1,6 +1,6 @@
 package com.buaa.sn2ov.other;
 
-import com.buaa.sn2ov.model.User;
+import com.buaa.sn2ov.model.Admin.User;
 import com.buaa.sn2ov.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
