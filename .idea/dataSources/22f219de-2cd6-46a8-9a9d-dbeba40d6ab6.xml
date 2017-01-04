@@ -22,208 +22,246 @@
     <table id="14" parent="2" name="line_station_rl"/>
     <table id="15" parent="2" name="station"/>
     <table id="16" parent="2" name="teamtask"/>
-    <table id="17" parent="2" name="user"/>
-    <column id="18" parent="13" name="LID">
+    <table id="17" parent="2" name="transfersurvey"/>
+    <table id="18" parent="2" name="user"/>
+    <column id="19" parent="13" name="LID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="19" parent="13" name="LineName">
+    <column id="20" parent="13" name="LineName">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="13" name="IsLooper">
+    <column id="21" parent="13" name="IsLooper">
       <Position>4</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="21" parent="13" name="LineOrder">
+    <column id="22" parent="13" name="LineOrder">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;50&apos;</DefaultExpression>
     </column>
-    <index id="22" parent="13" name="line_Order_uindex">
+    <index id="23" parent="13" name="line_Order_uindex">
       <ColNames>LineOrder</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="23" parent="13" name="PRIMARY">
+    <key id="24" parent="13" name="PRIMARY">
       <ColNames>LID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="24" parent="13" name="line_Order_uindex">
+    <key id="25" parent="13" name="line_Order_uindex">
       <ColNames>LineOrder</ColNames>
       <UnderlyingIndexName>line_Order_uindex</UnderlyingIndexName>
     </key>
-    <column id="25" parent="14" name="lsID">
+    <column id="26" parent="14" name="lsID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="26" parent="14" name="lineID">
+    <column id="27" parent="14" name="lineID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="27" parent="14" name="StationID">
+    <column id="28" parent="14" name="StationID">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="28" parent="14" name="StationOrder">
+    <column id="29" parent="14" name="StationOrder">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="29" parent="14" name="line_station_rl_lsID_uindex">
+    <index id="30" parent="14" name="line_station_rl_lsID_uindex">
       <ColNames>lsID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="30" parent="14" name="PRIMARY">
+    <key id="31" parent="14" name="PRIMARY">
       <ColNames>lsID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="31" parent="14" name="line_station_rl_lsID_uindex">
+    <key id="32" parent="14" name="line_station_rl_lsID_uindex">
       <ColNames>lsID</ColNames>
       <UnderlyingIndexName>line_station_rl_lsID_uindex</UnderlyingIndexName>
     </key>
-    <column id="32" parent="15" name="SID">
+    <column id="33" parent="15" name="SID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="33" parent="15" name="StationName">
+    <column id="34" parent="15" name="StationName">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="34" parent="15" name="StationType">
+    <column id="35" parent="15" name="StationType">
       <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="35" parent="15" name="station_SID_uindex">
+    <index id="36" parent="15" name="station_SID_uindex">
       <ColNames>SID</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="36" parent="15" name="station_StationName_uindex">
+    <index id="37" parent="15" name="station_StationName_uindex">
       <ColNames>StationName</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="37" parent="15" name="PRIMARY">
+    <key id="38" parent="15" name="PRIMARY">
       <ColNames>SID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="38" parent="15" name="station_SID_uindex">
+    <key id="39" parent="15" name="station_SID_uindex">
       <ColNames>SID</ColNames>
       <UnderlyingIndexName>station_SID_uindex</UnderlyingIndexName>
     </key>
-    <key id="39" parent="15" name="station_StationName_uindex">
+    <key id="40" parent="15" name="station_StationName_uindex">
       <ColNames>StationName</ColNames>
       <UnderlyingIndexName>station_StationName_uindex</UnderlyingIndexName>
     </key>
-    <column id="40" parent="16" name="TeamTaskID">
+    <column id="41" parent="16" name="TeamTaskID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="41" parent="16" name="StationID">
+    <column id="42" parent="16" name="StationID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="42" parent="16" name="SurveyType">
+    <column id="43" parent="16" name="SurveyType">
       <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="43" parent="16" name="TaskName">
+    <column id="44" parent="16" name="TaskName">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="44" parent="16" name="SurveyDate">
+    <column id="45" parent="16" name="SurveyDate">
       <Position>5</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="45" parent="16" name="TimeStart">
+    <column id="46" parent="16" name="TimeStart">
       <Position>6</Position>
       <DataType>time|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="46" parent="16" name="TimeEnd">
+    <column id="47" parent="16" name="TimeEnd">
       <Position>7</Position>
       <DataType>time|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="47" parent="16" name="TimePeriod">
+    <column id="48" parent="16" name="TimePeriod">
       <Position>8</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="48" parent="16" name="IsWeekDay">
+    <column id="49" parent="16" name="IsWeekDay">
       <Position>9</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="49" parent="16" name="CreatedAt">
+    <column id="50" parent="16" name="CreatedAt">
       <Position>10</Position>
       <DataType>datetime|0</DataType>
     </column>
-    <index id="50" parent="16" name="TeamTask_TeamTaskID_uindex">
+    <index id="51" parent="16" name="TeamTask_TeamTaskID_uindex">
       <ColNames>TeamTaskID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="51" parent="16" name="PRIMARY">
+    <key id="52" parent="16" name="PRIMARY">
       <ColNames>TeamTaskID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="52" parent="16" name="TeamTask_TeamTaskID_uindex">
+    <key id="53" parent="16" name="TeamTask_TeamTaskID_uindex">
       <ColNames>TeamTaskID</ColNames>
       <UnderlyingIndexName>TeamTask_TeamTaskID_uindex</UnderlyingIndexName>
     </key>
-    <column id="53" parent="17" name="UID">
+    <column id="54" parent="17" name="tid">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="54" parent="17" name="UserName">
+    <column id="55" parent="17" name="teamTaskID">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="17" name="name">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="57" parent="17" name="pointLocation">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="58" parent="17" name="position">
+      <Position>5</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <index id="59" parent="17" name="transferSurvey_tid_uindex">
+      <ColNames>tid</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="60" parent="17" name="PRIMARY">
+      <ColNames>tid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="61" parent="17" name="transferSurvey_tid_uindex">
+      <ColNames>tid</ColNames>
+      <UnderlyingIndexName>transferSurvey_tid_uindex</UnderlyingIndexName>
+    </key>
+    <column id="62" parent="18" name="UID">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="63" parent="18" name="UserName">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="55" parent="17" name="RealName">
+    <column id="64" parent="18" name="RealName">
       <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="56" parent="17" name="Password">
+    <column id="65" parent="18" name="Password">
       <Position>4</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="57" parent="17" name="Role">
+    <column id="66" parent="18" name="Role">
       <Position>5</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="58" parent="17" name="Mobile">
+    <column id="67" parent="18" name="Mobile">
       <Position>6</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="59" parent="17" name="IDCard">
+    <column id="68" parent="18" name="IDCard">
       <Position>7</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="60" parent="17" name="NFC">
+    <column id="69" parent="18" name="NFC">
       <Position>8</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <key id="61" parent="17" name="PRIMARY">
+    <key id="70" parent="18" name="PRIMARY">
       <ColNames>UID</ColNames>
       <Primary>1</Primary>
     </key>

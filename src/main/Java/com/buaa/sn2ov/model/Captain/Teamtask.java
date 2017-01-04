@@ -18,8 +18,8 @@ public class Teamtask {
     private String surveyType;
     private String taskName;
     private Date surveyDate;
-    private Time timeStart;
-    private Time timeEnd;
+    private String timeStart;
+    private String timeEnd;
     private String timePeriod;
     private String isWeekDay;
     private Timestamp createdAt;
@@ -76,21 +76,21 @@ public class Teamtask {
 
     @Basic
     @Column(name = "TimeStart", nullable = false)
-    public Time getTimeStart() {
+    public String getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(Time timeStart) {
+    public void setTimeStart(String timeStart) {
         this.timeStart = timeStart;
     }
 
     @Basic
     @Column(name = "TimeEnd", nullable = false)
-    public Time getTimeEnd() {
+    public String getTimeEnd() {
         return timeEnd;
     }
 
-    public void setTimeEnd(Time timeEnd) {
+    public void setTimeEnd(String timeEnd) {
         this.timeEnd = timeEnd;
     }
 

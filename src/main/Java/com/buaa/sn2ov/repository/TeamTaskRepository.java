@@ -25,7 +25,7 @@ public interface TeamTaskRepository extends JpaRepository<Teamtask,Integer> {
             "teamtask.timeStart =:qTimeStart,teamtask.timeEnd =:qTimeEnd,teamtask.timePeriod =:qTimePeriod,teamtask.isWeekDay =:qIsWeekDay," +
             "teamtask.createdAt =:qCreatedAt where teamtask.teamTaskId=:qTTID")
     public void updateTeamTask(@Param("qTTID") int TTId, @Param("qStationID") int stationId, @Param("qSurveyType") String surveyType, @Param("qTaskName") String taskName,
-                               @Param("qSurveyDate") Date surveyDate, @Param("qTimeStart") Time timeStart, @Param("qTimeEnd") Time timeEnd, @Param("qTimePeriod") String timePeriod,
+                               @Param("qSurveyDate") Date surveyDate, @Param("qTimeStart") String timeStart, @Param("qTimeEnd") String timeEnd, @Param("qTimePeriod") String timePeriod,
                                @Param("qIsWeekDay") String isWeekDay, @Param("qCreatedAt") Timestamp createdAt);
 
     @Query("select teamTask from Teamtask teamTask where teamTask.teamTaskId=:qTTID")

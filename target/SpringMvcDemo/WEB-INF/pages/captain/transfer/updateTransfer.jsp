@@ -1,3 +1,4 @@
+<%@ page import="java.sql.Time" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
@@ -30,6 +31,10 @@
     <link href="/resources/fonts/glyphicons-halflings-regular.woff" rel="stylesheet">
 
     <link rel="stylesheet" media="screen" href="/resources/css/form-validate.css" >
+
+    <link href="/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <link href="/resources/js/bootstrap-datetimepicker.js" rel="stylesheet">
 
 </head>
 
@@ -83,7 +88,7 @@
                             <%--<input id="name" type="text" name = "stationName"  value="${station.stationName}" required/>--%>
                         <%--</li>--%>
                         <li>
-                            <label for="stationName" style="font-size: 20px">选择车站</label>
+                            <label for="stationName">选择车站</label>
                             <select class="form-control" id="stationName" name="stationName" >
                                 <c:forEach items="${stationList}" var="stationA">
                                     <c:if test="${station.stationName==stationA.stationName}">
@@ -100,18 +105,44 @@
                             <label for="taskName">任务名称</label>
                             <input id="taskName" type="text" name = "taskName"  value="${teamtask.taskName}" required/>
                         </li>
-                        <li>
-                            <label for="surveyDate">调查日期</label>
-                            <input id="surveyDate" type="DATE" name = "surveyDate"  value="${teamtask.surveyDate}" required/>
+                        <%--<li>--%>
+                            <%--<label for="surveyDate">调查日期</label>--%>
+                            <%--<input id="surveyDate" type="DATE" name = "surveyDate"  value="${teamtask.surveyDate}" required/>--%>
+                        <%--</li>--%>
+                        <%--<li>--%>
+                            <%--<label for="timeStart">开始时间</label>--%>
+                            <%--<input id="timeStart" type="time" name = "timeStart"  value="${teamtask.timeStart}" required/>--%>
+                        <%--</li>--%>
+                        <%--<li>--%>
+                            <%--<label for="timeEnd">结束时间</label>--%>
+                            <%--<input id="timeEnd" type="time" name = "timeEnd"  value="${teamtask.timeEnd}" required/>--%>
+                        <%--</li>--%>
+                        <li style="height: 55px;">
+                            <label for="surveyDate" class="col-md-2 control-label">调查日期</label>
+                            <div class="input-group date form_date col-md-5"  data-date="" data-date-format="yyyy-MM-dd" data-link-field="surveyDate" data-link-format="yyyy-mm-dd">
+                                <input id="surveyDate" name="surveyDate" class="form-control" size="16" type="date" readonly value="${teamtask.surveyDate}" required>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
                         </li>
-                        <li>
-                            <label for="timeStart">开始时间</label>
-                            <input id="timeStart" type="time" name = "timeStart"  value="${teamtask.timeStart}" required/>
+
+                        <li style="height: 55px;">
+                            <label for="timeStart" class="col-md-2 control-slabel">开始时间</label>
+                            <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii:ss" data-link-field="timeStart" data-link-format="hh:ii">
+                                <input id="timeStart" name="timeStart" class="form-control" size="16" type="time" required>
+                                <%--value="${teamtask.timeStart}" --%>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
                         </li>
-                        <li>
-                            <label for="timeEnd">结束时间</label>
-                            <input id="timeEnd" type="time" name = "timeEnd"  value="${teamtask.timeEnd}" required/>
+
+                        <li style="height: 55px;">
+                            <label for="timeEnd" class="col-md-2 control-label">结束时间</label>
+                            <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="timeEnd" data-link-format="hh:ii" >
+                                <input id="timeEnd" name="timeEnd" class="form-control" size="16" type="time" required>
+                                <%--value="${teamtask.timeEnd}" --%>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
                         </li>
+
                         <li>
                             <label for="timePeriod">调查时段</label>
                             <select class="form-control" id="timePeriod" name="timePeriod" value="${teamtask.timePeriod}" >
@@ -179,8 +210,40 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='/resources/js/bootstrap-datetimepicker.js'></script>
+<script src='/resources/js/bootstrap-datetimepicker.zh-CN.js'></script>
 <script type="text/javascript">
-
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
 
 </script>
 

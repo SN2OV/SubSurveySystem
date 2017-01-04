@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,30 @@ public class TransferSurveyController {
                 teamtask.getTaskName(),teamtask.getSurveyDate(),teamtask.getTimeStart(),teamtask.getTimeEnd(),
                 teamtask.getTimePeriod(),teamtask.getIsWeekDay(),teamtask.getCreatedAt());
         teamTaskRepository.flush(); // 刷新缓冲区
+        return "redirect:/captain/transfer";
+    }
+
+    @RequestMapping(value = "/captain/transfer/add", method = RequestMethod.GET)
+    public String addTransfer(ModelMap modelMap) {
+        List<Station> stationList = stationRepository.findAll();
+        modelMap.addAttribute("stationList", stationList);
+        return "captain/transfer/addTransfer";
+    }
+
+    @RequestMapping(value = "/captain/transfer/addP", method = RequestMethod.POST)
+    public String addTransferPost(@ModelAttribute("transfer") Teamtask teamtask,@ModelAttribute("stationName") String stationName) {
+        int sid = stationRepository.getStationIDByName(stationName);
+        teamtask.setStationId(sid);
+        Timestamp currTimeStamp = new Timestamp(System.currentTimeMillis());
+        teamtask.setCreatedAt(currTimeStamp);
+        teamTaskRepository.saveAndFlush(teamtask);
+        return "redirect:/captain/transfer";
+    }
+
+    @RequestMapping(value = "/captain/transfer/delete/{id}", method = RequestMethod.GET)
+    public String deleteStation(@PathVariable("id") Integer teamTaskID) {
+        teamTaskRepository.delete(teamTaskID);
+        teamTaskRepository.flush();
         return "redirect:/captain/transfer";
     }
 

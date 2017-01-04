@@ -81,7 +81,7 @@
                 <table class="table table-striped table-bordered">
                     </tbody>
                     <tr>
-                        <th class="tableHeadStyle">序号</th>
+                        <th class="tableHeadStyle">ID</th>
                         <td>${teamtask.teamTaskId}</td>
                     </tr>
                     <tr>

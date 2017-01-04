@@ -66,9 +66,9 @@
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
-                <li class="active"><a href="#">换乘量调查</a></li>
+                <li class="active"><a href="/captain/transfer">换乘量调查</a></li>
                 <%--<li><a href="#">2013</a></li>--%>
-                <a href="/captain/walk/add" class="mynavbar-right">
+                <a href="/captain/transfer/add" class="mynavbar-right">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </ol>
