@@ -2,11 +2,12 @@ package com.buaa.sn2ov.controller.Captain;
 
 import com.buaa.sn2ov.model.Admin.Station;
 import com.buaa.sn2ov.model.Admin.User;
+import com.buaa.sn2ov.model.Captain.PertaskUserRl;
 import com.buaa.sn2ov.model.Captain.Teamtask;
-import com.buaa.sn2ov.repository.StationRepository;
-import com.buaa.sn2ov.repository.TeamTaskRepository;
+import com.buaa.sn2ov.model.Captain.Transfersurvey;
+import com.buaa.sn2ov.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +29,12 @@ public class TransferSurveyController {
     TeamTaskRepository teamTaskRepository;
     @Autowired
     StationRepository stationRepository;
+    @Autowired
+    TransferRepository transferRepository;
+    @Autowired
+    PertaskUserRepository pertaskUserRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @RequestMapping(value = "/captain/transfer", method = RequestMethod.GET)
     public String getMainPage(ModelMap modelMap) {
@@ -102,5 +109,102 @@ public class TransferSurveyController {
         teamTaskRepository.flush();
         return "redirect:/captain/transfer";
     }
+
+//    换乘量调查子任务
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask", method = RequestMethod.GET)
+    public String getTransferMainPage(@PathVariable("teamTaskId") Integer ttID, ModelMap modelMap) {
+
+        List<Transfersurvey> subTransferList = new ArrayList<Transfersurvey>();
+        subTransferList = transferRepository.findAll();
+        modelMap.addAttribute("subTransferList", subTransferList);
+        Teamtask teamTask = teamTaskRepository.findOne(ttID);
+        modelMap.addAttribute("teamTask",teamTask);
+        //获取每个子任务所分配的调查员
+        ArrayList<List<User>> userListArr = new ArrayList<List<User>>();
+        for (Transfersurvey transfersurvey : subTransferList){
+            int perTaskID = transfersurvey.getTid();
+            List<User> userList = pertaskUserRepository.getUserByPertaskIDAndSurveyType(perTaskID,"换乘量调查");
+            userListArr.add(userList);
+        }
+        modelMap.addAttribute("userListArr",userListArr);
+        //获取每个子任务未分配的调查员
+        ArrayList<List<User>> unAllotedUserListArr = new ArrayList<List<User>>();
+        for (Transfersurvey transfersurvey : subTransferList){
+            int perTaskID = transfersurvey.getTid();
+            List<User> unAllotedUserList = transferRepository.getUnAllotedUserBySurveyTypeAndPerTaskID(perTaskID,"换乘量调查");
+            unAllotedUserListArr.add(unAllotedUserList);
+        }
+
+        modelMap.addAttribute("unAllotedUserListArr",unAllotedUserListArr);
+
+        return "captain/transfer/subTransferMain";
+    }
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/show/{tid}", method = RequestMethod.GET)
+    public String showSubTransfer(@PathVariable("teamTaskId") Integer teamTaskId,  @PathVariable("tid") Integer tid, ModelMap modelMap) {
+        Teamtask teamTask = teamTaskRepository.findOne(teamTaskId);
+        Transfersurvey transfersurvey = transferRepository.findOne(tid);
+        modelMap.addAttribute("teamTask",teamTask);
+        modelMap.addAttribute("transfersurvey", transfersurvey);
+        return "captain/transfer/subTransferDetail";
+    }
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/add", method = RequestMethod.GET)
+    public String addSubTransfer(@PathVariable("teamTaskId")Integer teamTaskId ,  ModelMap modelMap) {
+        String teamTaskName = teamTaskRepository.findTeamTaskByID(teamTaskId).getTaskName();
+        modelMap.addAttribute("teamTaskName",teamTaskName);
+        modelMap.addAttribute("teamTaskId",teamTaskId);
+        return "captain/transfer/addSubTransfer";
+    }
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/addP", method = RequestMethod.POST)
+    public String addSubTransferPost(@ModelAttribute("transfer") Transfersurvey transfersurvey,@PathVariable("teamTaskId") int teamTaskId) {
+        transfersurvey.setTeamTaskId(teamTaskId);
+        transferRepository.saveAndFlush(transfersurvey);
+        return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
+    }
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/update/{tid}", method = RequestMethod.GET)
+    public String updateSubTransfer(@PathVariable("teamTaskId") Integer teamTaskId, @PathVariable("tid") Integer tid, ModelMap modelMap) {
+
+//        String teamTaskName = teamTaskRepository.findTeamTaskByID(teamTaskId).getTaskName();
+        Teamtask teamTask = teamTaskRepository.findTeamTaskByID(teamTaskId);
+        Transfersurvey transfersurvey = transferRepository.findOne(tid);
+
+        modelMap.addAttribute("transfersurvey",transfersurvey);
+        modelMap.addAttribute("teamTask",teamTask);
+        return "captain/transfer/updateSubTransfer";
+    }
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/updateP", method = RequestMethod.POST)
+    public String updateSubTransferPost(@ModelAttribute("subTransferP") Transfersurvey transfersurvey, @PathVariable("teamTaskId") Integer teamTaskId ) {
+
+        transferRepository.updateTransfer(transfersurvey.getTeamTaskId(),transfersurvey.getName(),transfersurvey.getPointLocation(),
+                transfersurvey.getPosition(),transfersurvey.getTid());
+        transferRepository.flush(); // 刷新缓冲区
+        return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
+    }
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/delete/{tid}", method = RequestMethod.GET)
+    public String deleteSubTransfer(@PathVariable("tid") Integer tid) {
+        transferRepository.delete(tid);
+        transferRepository.flush();
+        return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
+    }
+
+    @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/addPerson/${index}",method = RequestMethod.GET)
+    public String addPersonForPerTask(@PathVariable("index")Integer index,@ModelAttribute("teamTaskId")int teamTaskId,@ModelAttribute("perTaskUserAdd")String userName, ModelMap modelMap){
+        int uid = userRepository.findByUserName(userName).getUid();
+        PertaskUserRl ptuRl = new PertaskUserRl();
+        ptuRl.setSurveyType("换乘量调查");
+        ptuRl.setUserId(uid);
+        ptuRl.setPerTaskId(tid);
+        pertaskUserRepository.saveAndFlush(ptuRl);
+        pertaskUserRepository.flush();
+        return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
+    }
+
+
 
 }

@@ -34,4 +34,7 @@ public interface TeamTaskRepository extends JpaRepository<Teamtask,Integer> {
     @Query("select teamTask from Teamtask teamTask where teamTask.surveyType=:qSurveyType")
     public List<Teamtask> findTeamTaskByType(@Param("qSurveyType")String surveyType);
 
+    @Query("select teamTaskId from Teamtask teamTask where teamTask.taskName =:qTaskName")
+    public int findTeamTaskIDByName(@Param("qTaskName") String taskName);
+
 }

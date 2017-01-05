@@ -5,8 +5,10 @@
         <class>com.buaa.sn2ov.model.Admin.Line</class>
         <class>com.buaa.sn2ov.model.Admin.Station</class>
         <class>com.buaa.sn2ov.model.Admin.LineStationRl</class>
-        <class>com.buaa.sn2ov.controller.Captain.Teamtask</class>
         <class>com.buaa.sn2ov.model.Captain.Teamtask</class>
+        <class>com.buaa.sn2ov.model.Captain.Teamtask</class>
+        <class>com.buaa.sn2ov.model.Captain.Transfersurvey</class>
+        <class>com.buaa.sn2ov.model.Captain.PertaskUserRl</class>
         <properties>
             <property name="dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/subsurveysystem"/>

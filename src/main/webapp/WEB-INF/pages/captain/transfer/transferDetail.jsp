@@ -75,6 +75,7 @@
             <p>
                 <button type="button" onclick="location = '/captain/transfer/update/${teamtask.teamTaskId}'"  class="btn btn-primary">修改调查</button>
                 <button type="button" onclick="location = '/captain/transfer/delete/${teamtask.teamTaskId}'" class="btn btn-danger">删除调查</button>
+                <button type="button" onclick="location = '/captain/transfer/show/${teamtask.teamTaskId}/subtask'" class="btn btn-primary">调查分任务</button>
             </p>
 
             <div class="table-responsive">

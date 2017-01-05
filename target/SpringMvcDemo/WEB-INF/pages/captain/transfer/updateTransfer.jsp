@@ -75,7 +75,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
                 <li class="active"><a href="/captain/transfer">换乘量调查</a></li>
-                <li class="active"><a href="/captain/transfer/show/${teamtask.teamTaskId}">修改任务(${teamtask.taskName})</a></li>
+                <li class="active"><a href="/captain/transfer/update/${teamtask.teamTaskId}">修改任务(${teamtask.taskName})</a></li>
             </ol>
 
             <h2 class="sub-header">换乘量调查任务修改</h2>
