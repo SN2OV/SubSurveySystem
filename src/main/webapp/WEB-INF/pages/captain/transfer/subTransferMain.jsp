@@ -105,11 +105,14 @@
                                 <td>${subTransferList.indexOf(subTransfer)+1}</td>
                                 <td>${subTransfer.name}</td>
                                 <td>
-                                    <%--TODO 这里indexOf就是好的啊--%>
-                                        <%--${subTransferList.indexOf(subTransfer)}--%>
                                     <c:set var = "userList" value="${userListArr.get(subTransferList.indexOf(subTransfer))}"></c:set>
                                     <c:forEach items="${userList}" var="user">
-                                        ${user.realName}
+                                        <a href="/captain/transfer/show/${teamTask.teamTaskId}/subtask/RemovePerson/${subTransferList.indexOf(subTransfer)}_${userList.indexOf(user)}" title="view">
+                                            <%--TODO ss--%>
+                                            ${user.realName}
+                                            <span class="glyphicon .glyphicon-remove"></span>
+                                        </a>
+                                        <%--${user.realName}--%>
                                         <c:if test="${userList.indexOf(user)!=userList.size()-1}">
                                             ,
                                         </c:if>
@@ -168,14 +171,18 @@
         <%--index =    ${unAllotedUserListArr.indexOf(unAllocatedUserList)}--%>
         <div name="addPersonDiv" class="mydiv" style="display:none;" index = ${unAllotedUserListArr.indexOf(unAllocatedUserList)}>
                 <%--commandName和@ModelAttrobute对应--%>
-            <form:form action="subtask/addPerson/${unAllotedUserListArr.indexOf(unAllocatedUserList)}" method="post" commandName="perTaskUser">
-                <label for="perTaskUserAdd" style="font-size: 20px" index = ${unAllotedUserListArr.indexOf(unAllocatedUserList)}>选择调查员</label>
-                <select class="form-control" id="perTaskUserAdd" name="perTaskUserAdd" >
+            <form:form action="/captain/transfer/show/${teamTask.teamTaskId}/subtask/addPerson/${unAllotedUserListArr.indexOf(unAllocatedUserList)}" method="post" >
+                <label for="perTaskUser" style="font-size: 20px" index = ${unAllotedUserListArr.indexOf(unAllocatedUserList)}>选择调查员</label>
+                <select class="form-control" id="perTaskUser" name="perTaskUser" >
                     <c:set var="unAllocatedUserList" value="${unAllocatedUserList}"></c:set>
                     <c:forEach items="${unAllocatedUserList}" var="unAllocatedUser">
-                        <option>${unAllocatedUser.realName}</option>
+                        <c:set var="unAllocatedUserName" value="${unAllocatedUser.realName}"></c:set>
+                        <option>${unAllocatedUserName}</option>
                     </c:forEach>
                 </select>
+
+                <%--TODO ???必须在id--%>
+                <input type="hidden" id="tid" name = "tid" value="${teamTask.teamTaskId}">
 
                 <div class="form-group" style="float: right">
                     <button type="submit" class="btn btn-sm btn-success">提交</button>

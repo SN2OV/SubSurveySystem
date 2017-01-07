@@ -97,7 +97,7 @@
                         </li>
 
                         <li>
-                            <label for="position">调查位置</label>
+                            <label fof="position">调查位置</label>
                             <input id="position" type="text" name = "position" placeholder="换乘通道" required/>
                         </li>
 
