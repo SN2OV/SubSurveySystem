@@ -116,7 +116,7 @@ public class TransferSurveyController {
     public String getTransferMainPage(@PathVariable("teamTaskId") Integer ttID, ModelMap modelMap) {
 
         List<Transfersurvey> subTransferList = new ArrayList<Transfersurvey>();
-        subTransferList = transferRepository.findAll();
+        subTransferList = transferRepository.getTransferByTeamtaskID(ttID);
         modelMap.addAttribute("subTransferList", subTransferList);
         Teamtask teamTask = teamTaskRepository.findOne(ttID);
         modelMap.addAttribute("teamTask",teamTask);
@@ -124,7 +124,7 @@ public class TransferSurveyController {
         ArrayList<List<User>> userListArr = new ArrayList<List<User>>();
         for (Transfersurvey transfersurvey : subTransferList){
             int perTaskID = transfersurvey.getTid();
-            List<User> userList = pertaskUserRepository.getUserByPertaskIDAndSurveyType(perTaskID,"换乘量调查");
+            List<User> userList = pertaskUserRepository.getUserByPertaskIDAndTeamTaskID(perTaskID,ttID);
             userListArr.add(userList);
         }
         modelMap.addAttribute("userListArr",userListArr);
@@ -194,10 +194,10 @@ public class TransferSurveyController {
     }
 
 
+    //子任务分配调查员
     @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/addPerson/{index}",method = RequestMethod.POST)
-    public String addPersonForPerTask(@PathVariable("index")Integer index,@PathVariable("teamTaskId")int teamTaskId,@ModelAttribute("perTaskUser")String realName, ModelMap modelMap){
-        //TODO
-        List<Transfersurvey> subTransferList = transferRepository.findAll();
+    public String addPersonForPerTask(@PathVariable("index")Integer index,@PathVariable("teamTaskId")int ttID,@ModelAttribute("perTaskUser")String realName, ModelMap modelMap){
+        List<Transfersurvey> subTransferList = transferRepository.getTransferByTeamtaskID(ttID);
         int tid = subTransferList.get(index).getTid();
 
         int uid = userRepository.findByUserRealName(realName).getUid();
@@ -205,24 +205,26 @@ public class TransferSurveyController {
         ptuRl.setSurveyType("换乘量调查");
         ptuRl.setUserId(uid);
         ptuRl.setPerTaskId(tid);
+        ptuRl.setTeamTaskId(ttID);
         pertaskUserRepository.saveAndFlush(ptuRl);
         pertaskUserRepository.flush();
         return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
     }
 
+    //删除子任务分配的调查员
     @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/RemovePerson/{per_user_index}",method = RequestMethod.GET)
-    public String removePersonForPerTask(@PathVariable("per_user_index")String index){
+    public String removePersonForPerTask(@PathVariable("per_user_index")String index,@PathVariable("teamTaskId")int ttID){
 
         String[] lsArr = index.split("_");
         int subTransferIndex = Integer.parseInt(lsArr[0]);
         int userIndex = Integer.parseInt(lsArr[1]);
-        List<Transfersurvey> subTransferList = transferRepository.findAll();
+        List<Transfersurvey> subTransferList = transferRepository.getTransferByTeamtaskID(ttID);
         int tid = subTransferList.get(subTransferIndex).getTid();
         //获取每个子任务所分配的调查员
         ArrayList<List<User>> userListArr = new ArrayList<List<User>>();
         for (Transfersurvey transfersurvey : subTransferList){
             int perTaskID = transfersurvey.getTid();
-            List<User> userList = pertaskUserRepository.getUserByPertaskIDAndSurveyType(perTaskID,"换乘量调查");
+            List<User> userList = pertaskUserRepository.getUserByPertaskIDAndTeamTaskID(perTaskID,ttID);
             userListArr.add(userList);
         }
         int uid = userListArr.get(subTransferIndex).get(userIndex).getUid();

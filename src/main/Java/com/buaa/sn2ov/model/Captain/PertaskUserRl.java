@@ -12,6 +12,7 @@ public class PertaskUserRl {
     private String surveyType;
     private int perTaskId;
     private int userId;
+    private int teamTaskId;
 
     @Id
     @Column(name = "ptuID", nullable = false)
@@ -75,5 +76,15 @@ public class PertaskUserRl {
         result = 31 * result + perTaskId;
         result = 31 * result + userId;
         return result;
+    }
+
+    @Basic
+    @Column(name = "teamTaskID", nullable = false)
+    public int getTeamTaskId() {
+        return teamTaskId;
+    }
+
+    public void setTeamTaskId(int teamTaskId) {
+        this.teamTaskId = teamTaskId;
     }
 }

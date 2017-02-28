@@ -26,6 +26,9 @@ public interface TransferRepository extends JpaRepository<Transfersurvey,Integer
     @Query("select transfer from Transfersurvey transfer where transfer.tid =:qTID")
     public Transfersurvey getTransferByID(@Param("qTID")int qTID);
 
+    @Query("select transfer from Transfersurvey transfer where transfer.teamTaskId =:qTeamTaskID")
+    public List<Transfersurvey> getTransferByTeamtaskID(@Param("qTeamTaskID")int teamtaskID);
+
     @Query("select user from User user where uid not in (select userId from PertaskUserRl where perTaskId =:qPerTaskID and surveyType =:qSurveyType) and role = '调查员'")
     public List<User> getUnAllotedUserBySurveyTypeAndPerTaskID(@Param("qPerTaskID")int perTaskID,@Param("qSurveyType")String surveyType);
 
