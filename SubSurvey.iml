@@ -16,9 +16,10 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
+          <factory-entry name="NewSubwayPersistenceUnit" />
           <factory-entry name="SubwayPersistenceUnit" value="22f219de-2cd6-46a8-9a9d-dbeba40d6ab6" />
         </datasource-mapping>
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/Java/META-INF/persistence.xml" />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml" />
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
@@ -31,6 +32,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/Java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/webapp/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/Java/META-INF" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/classes" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -20,12 +20,12 @@
         <!--</security:authentication-provider>-->
     <!--</security:authentication-manager>-->
 
-    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/testlucene"/>
-        <property name="username" value="root"/>
-        <property name="password" value="123456"/>
-    </bean>
+    <!--<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>-->
+        <!--<property name="url" value="jdbc:mysql://localhost:3306/testlucene"/>-->
+        <!--<property name="username" value="root"/>-->
+        <!--<property name="password" value="123456"/>-->
+    <!--</bean>-->
 
     <!--暂时注释-->
     <!--&lt;!&ndash;自动配置七个过滤器&ndash;&gt;-->
