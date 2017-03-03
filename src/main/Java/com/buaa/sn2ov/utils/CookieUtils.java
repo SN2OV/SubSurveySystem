@@ -3,6 +3,9 @@ package com.buaa.sn2ov.utils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +15,11 @@ import java.util.Map;
 public class CookieUtils {
 
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAge){
+        try {
+            value = URLEncoder.encode(value, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Cookie cookie = new Cookie(name,value);
         cookie.setPath("/");
         if(maxAge>0){
@@ -35,7 +43,15 @@ public class CookieUtils {
         Cookie[] cookies = request.getCookies();
         if(null!=cookies){
             for(Cookie cookie : cookies){
-                cookieMap.put(cookie.getName(), cookie);
+                String nameUtf = null;
+                try {
+                    nameUtf = URLEncoder.encode(cookie.getName(),"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                cookieMap.put(nameUtf, cookie);
+
+//                cookieMap.put(cookie.getName(), cookie);
             }
         }
         return cookieMap;
