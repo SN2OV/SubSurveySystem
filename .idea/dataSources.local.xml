@@ -11,5 +11,15 @@
       <user-name>sn2ov</user-name>
       <resolve-scope>subsurveysystem:*</resolve-scope>
     </data-source>
+    <data-source name="subsurveysystem@localhost" uuid="04e27393-0151-4a3c-8e47-c2da73cec045">
+      <database-info product="MySQL" version="5.6.25-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <resolve-scope>subsurveysystem:</resolve-scope>
+    </data-source>
   </component>
 </project>

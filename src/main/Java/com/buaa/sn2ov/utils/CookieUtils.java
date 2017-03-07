@@ -16,7 +16,8 @@ public class CookieUtils {
 
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAge){
         try {
-            value = URLEncoder.encode(value, "UTF-8");
+            if(value != null)
+                value = URLEncoder.encode(value, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

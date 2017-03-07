@@ -69,4 +69,15 @@ public class UserRestController {
         return false;
     }
 
+    @RequestMapping(value = "/rest/update/user",method = RequestMethod.POST)
+    @ResponseBody
+    public Object updateUserInfo(@RequestBody User user){
+        HashMap<String,Object> hashMap = new HashMap<String, Object>();
+        usersRepository.updateUser(user.getUid(),user.getUserName(),user.getRealName(),user.getPassword(),user.getRole(),
+                user.getMobile(),user.getIdCard(),user.getNfc());
+        hashMap.put("flag",1);
+        hashMap.put("user",user);
+        return hashMap;
+    }
+
 }
