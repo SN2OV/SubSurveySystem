@@ -36,4 +36,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query("select u.role from User u where u.userName = :qUserName")
     public String getRoleByUserName(@Param("qUserName")String userName);
 
+    @Modifying
+    @Transactional
+    @Query("update User us set us.avatarUrl=:qAvatarUrl where us.uid =:qUID")
+    public void updateUserAvatar(@Param("qAvatarUrl")String avatarUrl,@Param("qUID")int uid);
+
 }

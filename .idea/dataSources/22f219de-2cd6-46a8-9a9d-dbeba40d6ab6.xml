@@ -222,96 +222,100 @@
       <Position>8</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <key id="61" parent="13" name="PRIMARY">
+    <column id="61" parent="13" name="AvatarUrl">
+      <Position>9</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <key id="62" parent="13" name="PRIMARY">
       <ColNames>UID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="62" parent="14" name="lsID">
+    <column id="63" parent="14" name="lsID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="63" parent="14" name="lineID">
+    <column id="64" parent="14" name="lineID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="64" parent="14" name="StationID">
+    <column id="65" parent="14" name="StationID">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="65" parent="14" name="StationOrder">
+    <column id="66" parent="14" name="StationOrder">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="66" parent="14" name="line_station_rl_lsID_uindex">
+    <index id="67" parent="14" name="line_station_rl_lsID_uindex">
       <ColNames>lsID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="67" parent="14" name="PRIMARY">
+    <key id="68" parent="14" name="PRIMARY">
       <ColNames>lsID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="68" parent="14" name="line_station_rl_lsID_uindex">
+    <key id="69" parent="14" name="line_station_rl_lsID_uindex">
       <ColNames>lsID</ColNames>
       <UnderlyingIndexName>line_station_rl_lsID_uindex</UnderlyingIndexName>
     </key>
-    <column id="69" parent="15" name="ptuID">
+    <column id="70" parent="15" name="ptuID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="70" parent="15" name="surveyType">
+    <column id="71" parent="15" name="surveyType">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="71" parent="15" name="teamTaskID">
+    <column id="72" parent="15" name="teamTaskID">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="72" parent="15" name="perTaskID">
+    <column id="73" parent="15" name="perTaskID">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="73" parent="15" name="userID">
+    <column id="74" parent="15" name="userID">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="74" parent="15" name="pertask_user_rl_ptuID_uindex">
+    <index id="75" parent="15" name="pertask_user_rl_ptuID_uindex">
       <ColNames>ptuID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="75" parent="15" name="PRIMARY">
+    <key id="76" parent="15" name="PRIMARY">
       <ColNames>ptuID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="76" parent="15" name="pertask_user_rl_ptuID_uindex">
+    <key id="77" parent="15" name="pertask_user_rl_ptuID_uindex">
       <ColNames>ptuID</ColNames>
       <UnderlyingIndexName>pertask_user_rl_ptuID_uindex</UnderlyingIndexName>
     </key>
-    <column id="77" parent="16" name="wid">
+    <column id="78" parent="16" name="wid">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <index id="78" parent="16" name="walksurvey_wid_uindex">
+    <index id="79" parent="16" name="walksurvey_wid_uindex">
       <ColNames>wid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="79" parent="16" name="PRIMARY">
+    <key id="80" parent="16" name="PRIMARY">
       <ColNames>wid</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="80" parent="16" name="walksurvey_wid_uindex">
+    <key id="81" parent="16" name="walksurvey_wid_uindex">
       <ColNames>wid</ColNames>
       <UnderlyingIndexName>walksurvey_wid_uindex</UnderlyingIndexName>
     </key>

@@ -2,9 +2,19 @@ package com.buaa.sn2ov.controller.Rest;
 
 import com.buaa.sn2ov.model.Admin.User;
 import com.buaa.sn2ov.repository.UserRepository;
+import com.buaa.sn2ov.utils.ImageUtils;
+import com.buaa.sn2ov.utils.StringUtils;
+import com.sun.org.apache.bcel.internal.classfile.Constant;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -80,4 +90,54 @@ public class UserRestController {
         return hashMap;
     }
 
+    @RequestMapping(value = "/rest/avatar/upload/",method = RequestMethod.POST)
+    @ResponseBody
+    public Object upLoadUserAvatar(@RequestParam("file") MultipartFile file,@RequestParam("fileName") String fileName,@RequestParam("uid")int uid, HttpSession session){
+        HashMap<String,Object> hashMap = new HashMap<String, Object>();
+        //重命名
+        String postfix = ".jpg";
+        String realPathFolder = session.getServletContext().getRealPath("/resources/upload/image");
+        fileName = fileName.replace("\"","");
+        String path = realPathFolder + "\\" + fileName;
+        File avatarFile = new File(path+postfix);
+        if(!avatarFile.exists())
+            avatarFile.mkdirs();
+        try {
+            file.transferTo(avatarFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //压缩图片
+        String reducePath = realPathFolder + "\\" +fileName +"_s" +postfix;
+        path += postfix;
+        ImageUtils.reduceImg(path,reducePath,0,0,(float)0.5);
+        if(avatarFile.exists()){
+            hashMap.put("flag",1);
+        }else
+            hashMap.put("flag",0);
+        //保存入库
+        usersRepository.updateUserAvatar(fileName,uid);
+        return hashMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/avatar/get/{imgName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public void testphoto(@PathVariable("imgName") String imgName, HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String fileName = request.getSession().getServletContext().getRealPath("/resources/upload/image/")
+                +imgName+".jpg";
+        File file = new File(fileName);
+        if(!(file.exists() && file.canRead()))
+            return;
+        FileInputStream inputStream = new FileInputStream(file);
+        byte[] data = new byte[(int)file.length()];
+        int length = inputStream.read(data);
+        inputStream.close();
+
+        response.setContentType("image/png");
+
+        OutputStream stream = response.getOutputStream();
+        stream.write(data);
+        stream.flush();
+        stream.close();
+    }
 }

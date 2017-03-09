@@ -18,6 +18,7 @@ public class User {
     private String mobile;
     private String idCard;
     private String nfc;
+    private String avatarUrl;
 
     @Id
     @Column(name = "UID", nullable = false)
@@ -129,5 +130,15 @@ public class User {
         result = 31 * result + (idCard != null ? idCard.hashCode() : 0);
         result = 31 * result + (nfc != null ? nfc.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "AvatarUrl", nullable = true, length = 100)
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
