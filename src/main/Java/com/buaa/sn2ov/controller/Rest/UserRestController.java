@@ -121,7 +121,7 @@ public class UserRestController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/avatar/get/{imgName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/rest/avatar/get/{imgName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public void testphoto(@PathVariable("imgName") String imgName, HttpServletRequest request,HttpServletResponse response) throws IOException {
         String fileName = request.getSession().getServletContext().getRealPath("/resources/upload/image/")
                 +imgName+".jpg";
