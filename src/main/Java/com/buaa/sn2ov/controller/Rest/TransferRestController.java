@@ -1,15 +1,16 @@
 package com.buaa.sn2ov.controller.Rest;
 
-import com.buaa.sn2ov.model.Captain.PertaskUserRl;
 import com.buaa.sn2ov.model.Captain.Teamtask;
 import com.buaa.sn2ov.model.Captain.Transfersurvey;
-import com.buaa.sn2ov.repository.PertaskUserRepository;
-import com.buaa.sn2ov.repository.StationRepository;
-import com.buaa.sn2ov.repository.TeamTaskRepository;
-import com.buaa.sn2ov.repository.TransferRepository;
+import com.buaa.sn2ov.model.Surveyor.DataFile;
+import com.buaa.sn2ov.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,8 @@ public class TransferRestController {
     StationRepository stationRepository;
     @Autowired
     TransferRepository transferRepository;
+    @Autowired
+    FileRepository fileRepository;
 
     //获取指定用户最新一条换乘量任务及其对应的主任务
     @RequestMapping(value = "/rest/transfer/new",method = RequestMethod.GET)
@@ -99,5 +102,56 @@ public class TransferRestController {
         return hashMap;
     }
 
+    @RequestMapping(value = "/rest/transferFile/upload/",method = RequestMethod.POST)
+    @ResponseBody
+//    public Object upLoadTransferFile(@RequestParam("file") MultipartFile file, @RequestParam("fileInfo") HashMap<String,Object> fileInfo, HttpSession session){
+    public Object upLoadTransferFile(@RequestParam("file") MultipartFile file, @RequestParam("fileName") String fileName,@RequestParam("uid")int uid,@RequestParam("teamTaskId")int teamTaskId,@RequestParam("perTaskId")int perTaskId,HttpSession session){
+            HashMap<String,Object> hashMap = new HashMap<String, Object>();
+        //重命名
+//        String postfix = ".jpg";
+//        fileName.endsWith(".xlsx")
+        //截取文件名 获得时间；判断后缀获得文件名；
+        String postfix = "";
+//        String fileName = fileInfo.get("fileName").toString();
+//        int perTaskID = Integer.parseInt(fileInfo.get("pertaskID").toString());
+//        int teamTaskID = Integer.parseInt(fileInfo.get("teamTaskID").toString());
+//        int uid = Integer.parseInt(fileInfo.get("uid").toString());
+        fileName = fileName.replace("\"","");
+        String surveyDate = fileName.substring(0,10);
+        String realPathFolder = session.getServletContext().getRealPath("/resources/upload/data/transfer/"+surveyDate+"/");
+        // 根据Windows和Linux系统的不同 路径分隔符不同
+        String seperator = File.separator;
+        String path = realPathFolder + seperator + fileName;
+        File newFile = new File(path+postfix);
+        if(!newFile.exists())
+            newFile.mkdirs();
+        try {
+            file.transferTo(newFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(newFile.exists()){
+            hashMap.put("flag",1);
+        }else
+            hashMap.put("flag",0);
+
+        //ptuID == null -> hashMap返回false
+        //根据ptuID获取count，判断是否已经有数据执行update or save
+        if(pertaskUserRepository.getPtuIdByUIDAndTaskID(uid,teamTaskId,perTaskId)!=null){
+            int ptuId = pertaskUserRepository.getPtuIdByUIDAndTaskID(uid,teamTaskId,perTaskId);
+            if(fileRepository.getCountByPtuId(ptuId)==0){
+                DataFile dataFile = new DataFile();
+                String[] temp = fileName.split("\\.");
+                fileName = temp[0];
+                dataFile.setFileName(fileName);
+                dataFile.setPtuId(ptuId);
+                fileRepository.saveAndFlush(dataFile);
+            }
+            hashMap.put("flag",1);
+        }else{
+            hashMap.put("flag",0);
+        }
+        return hashMap;
+    }
 
 }

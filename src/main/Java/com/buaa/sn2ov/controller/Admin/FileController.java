@@ -40,10 +40,10 @@ public class FileController{
 //    @RequestMapping("/manage")
 //    private String toIndex(ModelMap modelMap){
 //        //处理文本
-//        File[] files=new File(Constants.INDEX_FILE_PATH).listFiles();
+//        DataFile[] files=new DataFile(Constants.INDEX_FILE_PATH).listFiles();
 //        List<FileInfo> filesInfo = new ArrayList<FileInfo>();
 //        int id=1;
-//        for(File file:files){
+//        for(DataFile file:files){
 //            String name=file.getName();
 //            String path=file.getAbsolutePath();
 //            FileInfo tmpFile = new FileInfo();
@@ -61,7 +61,7 @@ public class FileController{
 //    private String uploadFile(@RequestParam(value = "fileAdd",required = false)MultipartFile file, HttpServletRequest request, ModelMap modelmap){
 //        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
 //        String fileName = file.getOriginalFilename();
-//        File targetFile = new File(path, fileName);
+//        DataFile targetFile = new DataFile(path, fileName);
 //        if(!targetFile.exists()){
 //            targetFile.mkdirs();
 //        }
@@ -108,7 +108,7 @@ public class FileController{
 //    public static void createIndex(Analyzer analyzer) throws Exception{
 //        long startCreateIndexTime = new Date().getTime();
 //        //创建索引库目录
-//        Directory dire= FSDirectory.open(new File(Constants.INDEX_STORE_PATH));
+//        Directory dire= FSDirectory.open(new DataFile(Constants.INDEX_STORE_PATH));
 //        IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_46, analyzer);
 //        //创建IndexWriter，进行索引文件的写入
 //        IndexWriter iw=new IndexWriter(dire, iwc);
@@ -124,8 +124,8 @@ public class FileController{
 //        //处理数据库
 //
 //        //处理文本
-//        File[] files=new File(Constants.INDEX_FILE_PATH).listFiles();
-//        for (File file : files) {
+//        DataFile[] files=new DataFile(Constants.INDEX_FILE_PATH).listFiles();
+//        for (DataFile file : files) {
 //            Document doc=new Document();
 //            String content = null;
 //            //判断文件类型
@@ -158,7 +158,7 @@ public class FileController{
 //    private void delAllIndex(){
 //        Analyzer analyzer=new StandardAnalyzer(Version.LUCENE_46);
 //        try {
-//            Directory dire= FSDirectory.open(new File(Constants.INDEX_STORE_PATH));
+//            Directory dire= FSDirectory.open(new DataFile(Constants.INDEX_STORE_PATH));
 //            IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_46, analyzer);
 //            //创建IndexWriter，进行索引文件的写入
 //            IndexWriter iw=new IndexWriter(dire, iwc);

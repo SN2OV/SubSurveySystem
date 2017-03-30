@@ -57,7 +57,7 @@
         <mvc:interceptor>
             <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->
             <mvc:mapping path="/admin/**" />
-            <!--<mvc:mapping path="/file/**" />-->
+            <!--<mvc:mapping path="/dataFile/**" />-->
             <!--<mvc:mapping path="/search/**" />-->
             <mvc:mapping path="/main/**" />
             <bean class="com.buaa.sn2ov.other.LoginInterceptor"></bean>

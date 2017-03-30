@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.util.AbstractList;
 import java.util.HashMap;
 
 /**
@@ -98,7 +99,9 @@ public class UserRestController {
         String postfix = ".jpg";
         String realPathFolder = session.getServletContext().getRealPath("/resources/upload/image");
         fileName = fileName.replace("\"","");
-        String path = realPathFolder + "\\" + fileName;
+        //TODO 根据Windows和Linux系统的不同 路径分隔符不同
+        String seperator = File.separator;
+        String path = realPathFolder + seperator + fileName;
         File avatarFile = new File(path+postfix);
         if(!avatarFile.exists())
             avatarFile.mkdirs();
@@ -108,7 +111,7 @@ public class UserRestController {
             e.printStackTrace();
         }
         //压缩图片
-        String reducePath = realPathFolder + "\\" +fileName +"_s" +postfix;
+        String reducePath = realPathFolder + seperator +fileName +"_s" +postfix;
         path += postfix;
         ImageUtils.reduceImg(path,reducePath,0,0,(float)0.5);
         if(avatarFile.exists()){
@@ -122,7 +125,7 @@ public class UserRestController {
 
     @ResponseBody
     @RequestMapping(value = "/rest/avatar/get/{imgName}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public void testphoto(@PathVariable("imgName") String imgName, HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void uploadPhoto(@PathVariable("imgName") String imgName, HttpServletRequest request,HttpServletResponse response) throws IOException {
         String fileName = request.getSession().getServletContext().getRealPath("/resources/upload/image/")
                 +imgName+".jpg";
         File file = new File(fileName);
@@ -140,4 +143,6 @@ public class UserRestController {
         stream.flush();
         stream.close();
     }
+
+
 }

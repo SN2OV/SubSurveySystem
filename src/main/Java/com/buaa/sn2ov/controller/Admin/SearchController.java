@@ -60,7 +60,7 @@ public class SearchController {
 //
 //    private static void search(Query query,ModelMap modelMap) throws Exception {
 //        //指定搜索目录
-//        Directory dire=FSDirectory.open(new File(Constants.INDEX_STORE_PATH));
+//        Directory dire=FSDirectory.open(new DataFile(Constants.INDEX_STORE_PATH));
 //        IndexReader ir= DirectoryReader.open(dire);
 //        //创建搜索器
 //        IndexSearcher is=new IndexSearcher(ir);

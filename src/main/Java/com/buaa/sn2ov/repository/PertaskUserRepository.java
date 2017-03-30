@@ -26,4 +26,9 @@ public interface PertaskUserRepository extends JpaRepository<PertaskUserRl,Integ
     @Query("select transfersurvey from Transfersurvey transfersurvey where tid in (" +
             "select perTaskId from PertaskUserRl pertaskUserRl where userId =:qUid and surveyType = '换乘量调查') order by tid desc")
     public List<Transfersurvey> getTransferSurveyByUid(@Param("qUid")int uid);
+
+    @Query("select ptuId from PertaskUserRl where userId =:qUid and teamTaskId =:qTeamTaskId and perTaskId =:qPerTaskId")
+    public Integer getPtuIdByUIDAndTaskID(@Param("qUid")int uid,@Param("qTeamTaskId")int teamTaskId,@Param("qPerTaskId")int perTaskId);
+
+
 }

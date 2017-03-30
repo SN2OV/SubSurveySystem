@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via dataFile:// -->
     <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -26,11 +26,11 @@
     <hr/>
     <h3>所有文件</h3>
     <%--<a href="#">--%>
-        <%--<input type="file" class="btn btn-primary btn-sm" value="添加">--%>
+        <%--<input type="dataFile" class="btn btn-primary btn-sm" value="添加">--%>
     <%--</a>--%>
-    <form action="/file/manage.do" method="post" commandName="fileAdd" role="form" enctype="multipart/form-data">
+    <form action="/dataFile/manage.do" method="post" commandName="fileAdd" role="form" enctype="multipart/form-data">
         <div style="width:400px;float: left">
-        <input type="file" id="fileAdd" name="fileAdd">
+        <input type="dataFile" id="fileAdd" name="fileAdd">
         </div>
         <div style="width:90px;float:left">
         <button type="submit" class="btn btn-primary btn-sm">添加新文件</button>
@@ -39,7 +39,7 @@
             <font color="red">${fileName}${uploadResult}</font>
         </div>
     </form>
-    <form action="/file/manage.action" method="post" commandName = "indexRecreate" role="form">
+    <form action="/dataFile/manage.action" method="post" commandName = "indexRecreate" role="form">
         <div style="width:70px;float:right">
             <button type="submit" class="btn btn-primary btn-sm" onclick="prompt()">更新索引</button>
         </div>
