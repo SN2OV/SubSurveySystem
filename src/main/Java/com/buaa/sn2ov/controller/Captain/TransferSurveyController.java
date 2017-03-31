@@ -103,10 +103,17 @@ public class TransferSurveyController {
         return "redirect:/captain/transfer";
     }
 
+    //删除调查总任务
     @RequestMapping(value = "/captain/transfer/delete/{id}", method = RequestMethod.GET)
     public String deleteStation(@PathVariable("id") Integer teamTaskID) {
         teamTaskRepository.delete(teamTaskID);
         teamTaskRepository.flush();
+        //TODO
+        List<Transfersurvey> transfersurveyList = transferRepository.getTransferByTeamtaskID(teamTaskID);
+        for(Transfersurvey transfersurvey : transfersurveyList){
+            transferRepository.delete(transfersurvey.getTid());
+            pertaskUserRepository.deleteRlByPertaskID(transfersurvey.getTid());
+        }
         return "redirect:/captain/transfer";
     }
 
@@ -186,10 +193,13 @@ public class TransferSurveyController {
         return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
     }
 
+    //删除调查子任务
     @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/delete/{tid}", method = RequestMethod.GET)
     public String deleteSubTransfer(@PathVariable("tid") Integer tid) {
         transferRepository.delete(tid);
         transferRepository.flush();
+        //删除子任务-调查员分配关系
+        pertaskUserRepository.deleteRlByPertaskID(tid);
         return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
     }
 

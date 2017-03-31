@@ -23,6 +23,11 @@ public interface PertaskUserRepository extends JpaRepository<PertaskUserRl,Integ
     @Query("delete from PertaskUserRl where perTaskId =:qPerTaskID and userId =:qUserID")
     public void deleteRlByPertaskIDAndUserID(@Param("qPerTaskID")int pertaskID,@Param("qUserID")int uid);
 
+    @Modifying
+    @Transactional
+    @Query("delete from PertaskUserRl where perTaskId =:qPerTaskID")
+    public void deleteRlByPertaskID(@Param("qPerTaskID")int pertaskID);
+
     @Query("select transfersurvey from Transfersurvey transfersurvey where tid in (" +
             "select perTaskId from PertaskUserRl pertaskUserRl where userId =:qUid and surveyType = '换乘量调查') order by tid desc")
     public List<Transfersurvey> getTransferSurveyByUid(@Param("qUid")int uid);
