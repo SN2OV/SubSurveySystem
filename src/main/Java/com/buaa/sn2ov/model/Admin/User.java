@@ -19,6 +19,7 @@ public class User {
     private String idCard;
     private String nfc;
     private String avatarUrl;
+    private String deviceToken;
 
     @Id
     @Column(name = "UID", nullable = false)
@@ -140,5 +141,15 @@ public class User {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    @Basic
+    @Column(name = "Device_token", nullable = true, length = 100)
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 }

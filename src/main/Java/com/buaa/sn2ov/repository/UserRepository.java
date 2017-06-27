@@ -1,5 +1,6 @@
 package com.buaa.sn2ov.repository;
 
+import com.buaa.sn2ov.model.Admin.Token;
 import com.buaa.sn2ov.model.Admin.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -40,5 +41,18 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Transactional
     @Query("update User us set us.avatarUrl=:qAvatarUrl where us.uid =:qUID")
     public void updateUserAvatar(@Param("qAvatarUrl")String avatarUrl,@Param("qUID")int uid);
+
+    @Query("select deviceToken from User user where user.uid =:qUID")
+    public String getTokenByUID(@Param("qUID")int qUID);
+
+    @Modifying      // 说明该方法是修改操作
+    @Transactional  // 说明该方法是事务性操作
+    @Query("update User user set user.deviceToken =:qDeviceToken where user.uid =:qUID")
+    public void updateTransfer(@Param("qDeviceToken") String qDeviceToken, @Param("qUID") int qUid);
+
+    @Modifying      // 说明该方法是修改操作
+    @Transactional  // 说明该方法是事务性操作
+    @Query("update User user set user.deviceToken = null where user.uid =:qUID")
+    public void delTokenByUid(@Param("qUID") int qUid);
 
 }

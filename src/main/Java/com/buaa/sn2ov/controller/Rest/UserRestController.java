@@ -1,6 +1,8 @@
 package com.buaa.sn2ov.controller.Rest;
 
+import com.buaa.sn2ov.model.Admin.Token;
 import com.buaa.sn2ov.model.Admin.User;
+import com.buaa.sn2ov.repository.TokenRepository;
 import com.buaa.sn2ov.repository.UserRepository;
 import com.buaa.sn2ov.utils.ImageUtils;
 import com.buaa.sn2ov.utils.StringUtils;
@@ -26,6 +28,8 @@ public class UserRestController {
 
     @Autowired
     UserRepository usersRepository;
+//    @Autowired
+//    TokenRepository tokenRepository;
 
 
     //根据用户id查找用户信息
@@ -39,7 +43,7 @@ public class UserRestController {
     //验证用户登录@GET
     @RequestMapping(value = "/rest/validate",method = RequestMethod.GET)
     @ResponseBody
-    public Object validateUserPassword(@RequestParam(value = "userName")String userName,@RequestParam(value = "password")String password){
+    public Object validateUserPassword(@RequestParam(value = "userName")String userName,@RequestParam(value = "password")String password,@RequestParam(value = "device_token")String device_token){
         User loginUser = null;
         String correctPassword = usersRepository.getPassword(userName)+"";
         HashMap<String,Object> hashMap = new HashMap<String, Object>();
@@ -49,6 +53,17 @@ public class UserRestController {
             loginUser = usersRepository.findByUserName(userName);
             hashMap.put("flag",1);
             hashMap.put("user",loginUser);
+            //更新token
+            int uid = loginUser.getUid();
+            String lastToken = usersRepository.getTokenByUID(uid)+"";
+            if(lastToken.equals(device_token)){
+                hashMap.put("flag",1);
+            }else{
+                usersRepository.updateTransfer(device_token,uid);
+                hashMap.put("flag",1);
+                hashMap.put("newToken",device_token);
+            }
+            return hashMap;
         }
         return hashMap;
 
@@ -69,6 +84,18 @@ public class UserRestController {
             loginUser = usersRepository.findByUserName(inputUserName);
             hashMap.put("flag",1);
             hashMap.put("user",loginUser);
+            //更新token
+            int uid = user.getUid();
+            String device_token = user.getDeviceToken();
+            String lastToken = usersRepository.getTokenByUID(uid)+"";
+            if(lastToken.equals(device_token)){
+                hashMap.put("flag",1);
+            }else{
+                usersRepository.updateTransfer(device_token,uid);
+                hashMap.put("flag",1);
+                hashMap.put("newToken",device_token);
+            }
+            return hashMap;
         }
         return hashMap;
 
@@ -144,5 +171,32 @@ public class UserRestController {
         stream.close();
     }
 
+//    //更新用户token@POST
+//    @RequestMapping(value = "/rest/token/",method = RequestMethod.POST)
+//    @ResponseBody
+//    public Object updateToken(@RequestBody Token token){
+//        int uid = token.getUid();
+//        String device_token = token.getDeviceToken();
+//        String lastToken = tokenRepository.getTokenByUID(uid).getDeviceToken();
+//        HashMap<String,Object> hashMap = new HashMap<String, Object>();
+//        if(lastToken.equals(device_token)){
+//            hashMap.put("flag",0);
+//        }else{
+//            tokenRepository.updateTransfer(device_token,uid);
+//            hashMap.put("flag",1);
+//            hashMap.put("newToken",device_token);
+//        }
+//        return hashMap;
+//    }
+
+    //客户端注销时删除对应用户的token
+    @RequestMapping(value = "/rest/token/del", method = RequestMethod.GET)
+    @ResponseBody
+    public Object delToken(@RequestParam("uid") Integer uid) {
+        HashMap<String,Object> hashMap = new HashMap<String, Object>();
+        usersRepository.delTokenByUid(uid);
+        hashMap.put("flag",1);
+        return hashMap;
+    }
 
 }

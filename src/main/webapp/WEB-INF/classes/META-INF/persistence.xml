@@ -10,6 +10,7 @@
         <class>com.buaa.sn2ov.model.Captain.Transfersurvey</class>
         <class>com.buaa.sn2ov.model.Captain.PertaskUserRl</class>
         <class>com.buaa.sn2ov.model.Surveyor.DataFile</class>
+        <class>com.buaa.sn2ov.model.Admin.Token</class>
         <properties>
             <property name="dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.connection.url" value="jdbc:mysql://123.206.20.236:3306/subsurveysystem"/>

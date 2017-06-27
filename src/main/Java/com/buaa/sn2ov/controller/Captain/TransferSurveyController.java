@@ -5,6 +5,10 @@ import com.buaa.sn2ov.model.Admin.User;
 import com.buaa.sn2ov.model.Captain.PertaskUserRl;
 import com.buaa.sn2ov.model.Captain.Teamtask;
 import com.buaa.sn2ov.model.Captain.Transfersurvey;
+import com.buaa.sn2ov.modules.push.AndroidNotification;
+import com.buaa.sn2ov.modules.push.Demo;
+import com.buaa.sn2ov.modules.push.PushClient;
+import com.buaa.sn2ov.modules.push.android.AndroidUnicast;
 import com.buaa.sn2ov.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -87,7 +91,7 @@ public class TransferSurveyController {
     }
 
     @RequestMapping(value = "/captain/transfer/add", method = RequestMethod.GET)
-    public String addTransfer(ModelMap modelMap) {
+    public String addTransfer(ModelMap modelMap) throws Exception {
         List<Station> stationList = stationRepository.findAll();
         modelMap.addAttribute("stationList", stationList);
         return "captain/transfer/addTransfer";
@@ -206,7 +210,7 @@ public class TransferSurveyController {
 
     //子任务分配调查员
     @RequestMapping(value = "/captain/transfer/show/{teamTaskId}/subtask/addPerson/{index}",method = RequestMethod.POST)
-    public String addPersonForPerTask(@PathVariable("index")Integer index,@PathVariable("teamTaskId")int ttID,@ModelAttribute("perTaskUser")String realName, ModelMap modelMap){
+    public String addPersonForPerTask(@PathVariable("index")Integer index,@PathVariable("teamTaskId")int ttID,@ModelAttribute("perTaskUser")String realName, ModelMap modelMap) throws Exception {
         List<Transfersurvey> subTransferList = transferRepository.getTransferByTeamtaskID(ttID);
         int tid = subTransferList.get(index).getTid();
 
@@ -218,6 +222,21 @@ public class TransferSurveyController {
         ptuRl.setTeamTaskId(ttID);
         pertaskUserRepository.saveAndFlush(ptuRl);
         pertaskUserRepository.flush();
+
+        //根据调查员推送
+        //客户端登录时，把手机ID发到服务器上面，并以用户名-手机ID的数据库中，推送给绑定
+        AndroidUnicast unicast = new AndroidUnicast("5951229f8f4a9d5678000c3f","66z8rjpbzs6mob0grlzhx51beb1alrq2");
+        String device_token = userRepository.getTokenByUID(uid);
+        unicast.setDeviceToken( device_token);
+        unicast.setTicker("通知");
+        unicast.setTitle("新的任务");
+        unicast.setText("组长已为你分配新的换乘量调查任务");
+        unicast.goAppAfterOpen();
+        unicast.setDisplayType(AndroidNotification.DisplayType.NOTIFICATION);
+        unicast.setProductionMode();
+        unicast.setExtraField("test", "helloworld");
+        new PushClient().send(unicast);
+
         return "redirect:/captain/transfer/show/{teamTaskId}/subtask";
     }
 
